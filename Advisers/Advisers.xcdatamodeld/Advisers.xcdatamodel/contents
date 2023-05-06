@@ -1,9 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
-        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22E261" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Bot" representedClassName="Bot" syncable="YES">
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="icon" optional="YES" attributeType="Binary"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="preText" optional="YES" attributeType="String"/>
+        <attribute name="updatedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="exampleMessages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExampleMessage" inverseName="bot" inverseEntity="ExampleMessage"/>
+        <relationship name="roomBots" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RoomBot" inverseName="bot" inverseEntity="RoomBot"/>
     </entity>
-    <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
-    </elements>
+    <entity name="BotMessage" representedClassName="BotMessage" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+        <relationship name="bot" maxCount="1" deletionRule="Nullify" destinationEntity="Bot"/>
+        <relationship name="room" maxCount="1" deletionRule="Nullify" destinationEntity="Room" inverseName="botMessages" inverseEntity="Room"/>
+    </entity>
+    <entity name="ExampleMessage" representedClassName="ExampleMessage" syncable="YES">
+        <attribute name="assistantMessage" attributeType="String"/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="updatedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="userMessage" attributeType="String"/>
+        <relationship name="bot" maxCount="1" deletionRule="Nullify" destinationEntity="Bot" inverseName="exampleMessages" inverseEntity="Bot"/>
+    </entity>
+    <entity name="Room" representedClassName="Room" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="botMessages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BotMessage" inverseName="room" inverseEntity="BotMessage"/>
+        <relationship name="roomBots" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RoomBot" inverseName="room" inverseEntity="RoomBot"/>
+        <relationship name="userMessages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UserMessage" inverseName="room" inverseEntity="UserMessage"/>
+    </entity>
+    <entity name="RoomBot" representedClassName="RoomBot" syncable="YES">
+        <attribute name="attendedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="bot" maxCount="1" deletionRule="Nullify" destinationEntity="Bot" inverseName="roomBots" inverseEntity="Bot"/>
+        <relationship name="room" maxCount="1" deletionRule="Nullify" destinationEntity="Room" inverseName="roomBots" inverseEntity="Room"/>
+    </entity>
+    <entity name="UserMessage" representedClassName="UserMessage" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+        <relationship name="room" maxCount="1" deletionRule="Nullify" destinationEntity="Room" inverseName="userMessages" inverseEntity="Room"/>
+    </entity>
 </model>

@@ -13,10 +13,49 @@ struct PersistenceController {
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        for _ in 0..<10 {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
+    
+        let currentTime = Date()
+        let fiveMinutesAgo = currentTime.addingTimeInterval(-5 * 60)
+        
+        let bot = Bot(context: viewContext)
+        bot.id = UUID()
+        bot.name = "Oh My Bot"
+        bot.createdAt = fiveMinutesAgo
+        bot.updatedAt = fiveMinutesAgo
+        
+        let example = ExampleMessage(context: viewContext)
+        example.bot = bot
+        example.userMessage = "こんにちは！"
+        example.assistantMessage = "こんにちは！ご用ですか？"
+        example.createdAt = currentTime
+        example.updatedAt = currentTime
+        
+        for i in 0..<20 {
+            let newRoom = Room(context: viewContext)
+            newRoom.id = UUID()
+            newRoom.name = "おへやNo.\(i + 1)"
+            newRoom.createdAt = fiveMinutesAgo
+            newRoom.updatedAt = fiveMinutesAgo
+            
+            let userMessage = UserMessage(context: viewContext)
+            userMessage.id = UUID()
+            userMessage.room = newRoom
+            userMessage.text = "Message from user \(i)\nHi, I am User!"
+            userMessage.createdAt = fiveMinutesAgo
+            
+            let botMessage = BotMessage(context: viewContext)
+            botMessage.id = UUID()
+            botMessage.bot = bot
+            botMessage.room = newRoom
+            botMessage.text = "Message from bot \(i)\nHi, I am bot!"
+            botMessage.createdAt = Date()
+            
+            let roomBot = RoomBot(context: viewContext)
+            roomBot.bot = bot
+            roomBot.room = newRoom
+            roomBot.attendedAt = currentTime
         }
+        
         do {
             try viewContext.save()
         } catch {

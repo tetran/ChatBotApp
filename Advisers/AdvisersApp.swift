@@ -16,5 +16,10 @@ struct AdvisersApp: App {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
+        
+        Settings {
+            AppSettingView()
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+        }
     }
 }
