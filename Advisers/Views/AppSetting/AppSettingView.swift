@@ -13,6 +13,7 @@ struct AppSettingView: View {
     enum Tab {
         case basic
         case bot
+        case dev
     }
     
     var body: some View {
@@ -26,10 +27,17 @@ struct AppSettingView: View {
 
             BotSettingView()
                 .tabItem {
-                    Label("ボット", systemImage: "poweroutlet.type.b")
+                    Label("Bot", systemImage: "poweroutlet.type.b")
                 }
                 .tag(Tab.bot)
                 .frame(minHeight: 600)
+            
+            DevMenuView()
+                .tabItem {
+                    Label("Dev", systemImage: "hammer")
+                }
+                .tag(Tab.dev)
+                .frame(minHeight: 300)
         }
         .frame(minWidth: 600)
     }

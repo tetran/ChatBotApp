@@ -16,6 +16,7 @@
 		5B1DD9842A0765A6008996DA /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1DD9832A0765A6008996DA /* APIRequest.swift */; };
 		5B1DD9862A0765AE008996DA /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1DD9852A0765AE008996DA /* APIResponse.swift */; };
 		5B1DD9882A0765C0008996DA /* APICommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1DD9872A0765C0008996DA /* APICommunicator.swift */; };
+		5B1DD98A2A07A866008996DA /* DevMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1DD9892A07A866008996DA /* DevMenuView.swift */; };
 		5BD871EF2A049DAB003A169E /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD871EE2A049DAB003A169E /* UserDataManager.swift */; };
 		5BD871F12A04A237003A169E /* EditBotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD871F02A04A237003A169E /* EditBotView.swift */; };
 		5BD871F32A04A333003A169E /* NewBotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD871F22A04A333003A169E /* NewBotView.swift */; };
@@ -67,6 +68,7 @@
 		5B1DD9832A0765A6008996DA /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		5B1DD9852A0765AE008996DA /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
 		5B1DD9872A0765C0008996DA /* APICommunicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICommunicator.swift; sourceTree = "<group>"; };
+		5B1DD9892A07A866008996DA /* DevMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevMenuView.swift; sourceTree = "<group>"; };
 		5BD871EE2A049DAB003A169E /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
 		5BD871F02A04A237003A169E /* EditBotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBotView.swift; sourceTree = "<group>"; };
 		5BD871F22A04A333003A169E /* NewBotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBotView.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 				5BD871F22A04A333003A169E /* NewBotView.swift */,
 				5BD871F42A04BB36003A169E /* NewExampleView.swift */,
 				5BD871F62A04BB46003A169E /* EditExampleView.swift */,
+				5B1DD9892A07A866008996DA /* DevMenuView.swift */,
 			);
 			path = AppSetting;
 			sourceTree = "<group>";
@@ -359,6 +362,7 @@
 				5BD871F32A04A333003A169E /* NewBotView.swift in Sources */,
 				5BEFA51F2A036F4A004B8537 /* ExampleMessage+CoreDataClass.swift in Sources */,
 				5BD872012A063E3D003A169E /* RoomBot+CoreDataProperties.swift in Sources */,
+				5B1DD98A2A07A866008996DA /* DevMenuView.swift in Sources */,
 				5BEFA5462A03B327004B8537 /* ModifyRoomNameView.swift in Sources */,
 				5B1DD9742A075A0C008996DA /* OpenAIClient.swift in Sources */,
 				5BD871F92A063093003A169E /* ExampleMessageRowView.swift in Sources */,

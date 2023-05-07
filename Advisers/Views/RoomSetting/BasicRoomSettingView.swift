@@ -13,7 +13,7 @@ struct BasicRoomSettingView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("ルーム名")
+            Text("Room名")
                 .font(.title2)
             HStack {
                 Text(room.name)
@@ -38,6 +38,12 @@ struct BasicRoomSettingView: View {
                 .font(.title2)
                 .padding(.top)
             Text(room.id.uuidString)
+                .padding(.vertical)
+            
+            Text("作成日")
+                .font(.title2)
+                .padding(.top)
+            Text(room.createdAt.appFormat())
                 .padding(.vertical)
         }
         .padding()

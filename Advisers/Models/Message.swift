@@ -17,3 +17,9 @@ struct Message: Identifiable {
     
     var postedBy: String
 }
+
+extension Message: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}

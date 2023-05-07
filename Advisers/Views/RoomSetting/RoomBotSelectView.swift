@@ -13,7 +13,7 @@ struct RoomBotSelectView: View {
     
     let room: Room
     @Binding var newBotId: UUID?
-    @Binding var bots: [Bot]
+    @Binding var assignedBots: [Bot]
     
     var selectableBots: [Bot] {
         Bot.fetchAll(in: viewContext).filter { bot in
@@ -32,7 +32,7 @@ struct RoomBotSelectView: View {
                     
                     try! viewContext.save()
                     
-                    bots.append(bot)
+                    assignedBots.append(bot)
                     newBotId = bot.id
                     dismiss()
                 } label: {
@@ -47,7 +47,7 @@ struct RoomBotSelectView_Previews: PreviewProvider {
     static var previews: some View {
         let context = PersistenceController.preview.container.viewContext
         let firstRoom = Room.fetchFirst(in: context)
-        RoomBotSelectView(room: firstRoom!, newBotId: .constant(nil), bots: .constant([]))
+        RoomBotSelectView(room: firstRoom!, newBotId: .constant(nil), assignedBots: .constant([]))
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

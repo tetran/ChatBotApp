@@ -13,7 +13,7 @@ struct NewBotView: View {
 
     @State private var botName = ""
     
-    let completion: ((Bot) -> Void)?
+    @Binding var newBot: Bot?
 
     var body: some View {
         VStack {
@@ -43,7 +43,7 @@ struct NewBotView: View {
                     
                     try! viewContext.save()
 
-                    completion?(bot)
+                    newBot = bot
                     dismiss()
                 } label: {
                     Text("Bot作成")
@@ -58,6 +58,6 @@ struct NewBotView: View {
 
 struct NewBotView_Previews: PreviewProvider {
     static var previews: some View {
-        NewBotView(completion: nil)
+        NewBotView(newBot: .constant(nil))
     }
 }

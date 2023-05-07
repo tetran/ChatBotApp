@@ -12,9 +12,10 @@ struct RoomBotSettingView: View {
 
     let room: Room
     
-    @State private var bots: [Bot] = []
     @State private var showAddBot = false
     @State private var newBotId: UUID?
+    
+    @Binding var assignedBots: [Bot]
 
     var body: some View {
         List {
@@ -24,18 +25,18 @@ struct RoomBotSettingView: View {
                 Label("Add Bot", systemImage: "plus")
             }
             .sheet(isPresented: $showAddBot) {
-                RoomBotSelectView(room: room, newBotId: $newBotId, bots: $bots)
+                RoomBotSelectView(room: room, newBotId: $newBotId, assignedBots: $assignedBots)
             }
 
-            ForEach(bots) { bot in
+            ForEach(assignedBots) { bot in
                 HStack {
                     Text(bot.name)
                     
                     Spacer()
                     
                     Button {
-                        if let botIndex = bots.firstIndex(of: bot) {
-                            bots.remove(at: botIndex)
+                        if let botIndex = assignedBots.firstIndex(of: bot) {
+                            assignedBots.remove(at: botIndex)
                             room.deleteRelatedBot(bot, context: viewContext)
                         }
                     } label: {
@@ -52,9 +53,6 @@ struct RoomBotSettingView: View {
                 disableHightlight()
             }
         }
-        .onAppear {
-            bots = room.fetchRelatedBots()
-        }
     }
 
     private func disableHightlight() {
@@ -70,7 +68,7 @@ struct RoomBotSettingView_Previews: PreviewProvider {
     static var previews: some View {
         let context = PersistenceController.preview.container.viewContext
         let firstRoom = Room.fetchFirst(in: context)
-        RoomBotSettingView(room: firstRoom!)
+        RoomBotSettingView(room: firstRoom!, assignedBots: .constant([]))
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

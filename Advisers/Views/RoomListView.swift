@@ -12,16 +12,22 @@ struct RoomListView: View {
 
     @FetchRequest(
         entity: Room.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \Room.name, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Room.createdAt, ascending: true)],
         animation: .default)
     private var rooms: FetchedResults<Room>
     
     @State private var selectedRoom: Room?
     @State private var showNewRoom = false
+    @State private var newRoom: Room?
     
     var body: some View {
         NavigationView {
             VStack {
+                Text("Room")
+                    .font(.title)
+                
+                Divider()
+                
                 List(selection: $selectedRoom) {
                     ForEach(rooms) { room in
                         NavigationLink {
@@ -46,13 +52,19 @@ struct RoomListView: View {
                 .padding()
                 .buttonStyle(.plain)
                 .sheet(isPresented: $showNewRoom) {
-                    NewRoomView()
-                        .frame(minWidth: 400, minHeight: 400)
+                    NewRoomView(newRoom: $newRoom)
+                        .frame(minWidth: 400, minHeight: 200)
                 }
             }
         }
         .onAppear {
             selectedRoom = rooms.first
+        }
+        .onChange(of: newRoom) { newRoom in
+            if let newRoom = newRoom {
+                selectedRoom = newRoom
+                self.newRoom = nil
+            }
         }
     }
 }

@@ -12,65 +12,51 @@ struct NewRoomView: View {
     @Environment(\.dismiss) private var dismiss
     
     @State private var roomName: String = ""
-    @State private var newRoom: Room?
-    @State private var isSettingViewActive = false
+    @Binding var newRoom: Room?
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                Form {
-                    Section(header: Text("New Room")) {
-                        TextField("名前", text: $roomName)
-                            .padding()
-                    }
+        VStack {
+            Form {
+                Section(header: Text("New Room")) {
+                    TextField("名前", text: $roomName)
+                        .padding()
                 }
-                .padding(20)
+            }
+            .padding(20)
+            
+            HStack {
+                Spacer()
                 
-                HStack {
-                    Spacer()
-                    
-                    Button {
-                        dismiss()
-                    } label: {
-                        Text("キャンセル")
-                    }
-                    
-                    Button {
-                        let room = Room(context: viewContext)
-                        room.id = UUID()
-                        room.name = roomName
-                        room.createdAt = Date()
-                        room.updatedAt = Date()
-                        try! viewContext.save()
-
-                        newRoom = room
-                        isSettingViewActive = true
-                    } label: {
-                        Text("次へ")
-                    }
-                    .padding(.leading)
-                    .disabled(roomName.isEmpty)
-                    .navigationDestination(isPresented: $isSettingViewActive) {
-                        if let newRoom = newRoom {
-                            RoomSettingView(room: newRoom)
-                                .frame(minWidth: 400, minHeight: 400)
-                        }
-                    }
+                Button {
+                    dismiss()
+                } label: {
+                    Text("キャンセル")
                 }
-                .padding()
+                
+                Button {
+                    let room = Room(context: viewContext)
+                    room.id = UUID()
+                    room.name = roomName
+                    room.createdAt = Date()
+                    room.updatedAt = Date()
+                    try! viewContext.save()
+
+                    newRoom = room
+                    dismiss()
+                } label: {
+                    Text("Room作成")
+                }
+                .padding(.leading)
+                .disabled(roomName.isEmpty)
             }
-        }
-        .onChange(of: isSettingViewActive) { isActive in
-            if !isActive {
-                dismiss()
-            }
+            .padding()
         }
     }
 }
 
 struct NewRoomView_Previews: PreviewProvider {
     static var previews: some View {
-        NewRoomView()
+        NewRoomView(newRoom: .constant(nil))
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

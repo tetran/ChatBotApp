@@ -12,6 +12,8 @@ struct RoomSettingView: View {
     @State private var selection: Tab = .basic
     
     let room: Room
+    
+    @Binding var assignedBots: [Bot]
 
     enum Tab {
         case basic
@@ -37,13 +39,13 @@ struct RoomSettingView: View {
             TabView(selection: $selection) {
                 BasicRoomSettingView(room: room)
                     .tabItem {
-                        Label("ルーム情報", systemImage: "star")
+                        Label("Room情報", systemImage: "star")
                     }
                     .tag(Tab.basic)
 
-                RoomBotSettingView(room: room)
+                RoomBotSettingView(room: room, assignedBots: $assignedBots)
                     .tabItem {
-                        Label("ボット", systemImage: "list.bullet")
+                        Label("Bot", systemImage: "list.bullet")
                     }
                     .tag(Tab.bot)
             }
@@ -57,6 +59,6 @@ struct RoomSettingView_Previews: PreviewProvider {
         let context = PersistenceController.preview.container.viewContext
         let firstRoom = Room.fetchFirst(in: context)
         
-        RoomSettingView(room: firstRoom!)
+        RoomSettingView(room: firstRoom!, assignedBots: .constant([]))
     }
 }

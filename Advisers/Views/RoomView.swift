@@ -17,6 +17,7 @@ struct RoomView: View {
     @State private var newText: String = ""
 
     @State private var showRoomSetting = false
+    @State private var newMessageAdded = false
 
     let room: Room
 
@@ -33,17 +34,33 @@ struct RoomView: View {
                     Label("Setting", systemImage: "gear")
                 }
                 .sheet(isPresented: $showRoomSetting) {
-                    RoomSettingView(room: room)
+                    RoomSettingView(room: room, assignedBots: $assignedBots)
                         .frame(minWidth: 400, minHeight: 400)
                 }
+                .buttonStyle(.plain)
                 .padding()
             }
 
             Divider()
-
-            ScrollView {
-                ForEach(messages) { message in
-                    MessageRowView(message: message)
+            
+            ScrollViewReader { proxy in
+                ScrollView {
+                    LazyVStack {
+                        ForEach(messages) { message in
+                            MessageRowView(message: message).id(message)
+                        }
+                        .onAppear {
+                            if messages.count > 0 {
+                                proxy.scrollTo(messages[messages.count - 1])
+                            }
+                        }
+                        .onChange(of: newMessageAdded) { added in
+                            if added {
+                                proxy.scrollTo(messages[messages.count - 1])
+                                newMessageAdded = false
+                            }
+                        }
+                    }
                 }
             }
             .padding(8)
@@ -81,6 +98,7 @@ struct RoomView: View {
                             self.messages.append(userMessage.toMessage())
 
                             newText = ""
+                            newMessageAdded = true
 
                             guard let bot = targetBot else {
                                 return
@@ -118,12 +136,15 @@ struct RoomView: View {
                                     try! viewContext.save()
 
                                     self.messages.append(botMessage.toMessage())
+                                    newMessageAdded = true
                                 }
                             }
                         } label: {
                             Label("送信", systemImage: "paperplane.fill")
                         }
                         .padding()
+                        .buttonStyle(.plain)
+                        .font(.title2)
                         .disabled(targetBot == nil || newText.isEmpty)
                     }
                 }

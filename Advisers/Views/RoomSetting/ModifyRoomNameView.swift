@@ -17,7 +17,7 @@ struct ModifyRoomNameView: View {
     var body: some View {
         VStack {
             Form {
-                Section(header: Text("ルーム名を変更する")) {
+                Section(header: Text("Room名を変更する")) {
                     TextField("名前", text: $roomName)
                         .padding()
                 }

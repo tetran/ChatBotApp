@@ -18,7 +18,7 @@ struct BotSettingView: View {
     
     @State private var selectedBot: Bot?
     @State private var showNewBot = false
-    @State private var newBotId: UUID?
+    @State private var newBot: Bot?
     
     var body: some View {
         NavigationView {
@@ -37,19 +37,12 @@ struct BotSettingView: View {
                 }
                 .frame(minWidth: 300)
                 .navigationTitle("Bot")
-                .onChange(of: newBotId) { botId in
-                    if let botId = botId {
-                        selectedBot = bots.first(where: { $0.id == botId })
-                        newBotId = nil
+                .onChange(of: newBot) { newBot in
+                    if let newBot = newBot {
+                        selectedBot = newBot
+                        self.newBot = nil
                     }
                 }
-                .onAppear {
-                    if let botId = newBotId {
-                        selectedBot = bots.first(where: { $0.id == botId })
-                        newBotId = nil
-                    }
-                }
-                
                 
                 Button {
                     showNewBot = true
@@ -60,10 +53,7 @@ struct BotSettingView: View {
                 .padding()
                 .buttonStyle(.plain)
                 .sheet(isPresented: $showNewBot) {
-                    NewBotView() { newBot in
-                        // 作成画面を閉じた時に、新しいボットにフォーカスさせる
-                        newBotId = newBot.id
-                    }
+                    NewBotView(newBot: $newBot)
                         .frame(minWidth: 400, minHeight: 200)
                 }
             }
