@@ -50,7 +50,7 @@ extension Bot {
 
 }
 
-extension Bot : Identifiable {
+extension Bot: Identifiable {
     static func fetchFirst(in context: NSManagedObjectContext) -> Bot? {
         let request: NSFetchRequest<Bot> = Bot.fetchRequest()
         request.fetchLimit = 1

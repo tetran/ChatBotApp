@@ -10,6 +10,7 @@ import SwiftUI
 struct RoomSettingView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var selection: Tab = .basic
+    
     let room: Room
 
     enum Tab {
