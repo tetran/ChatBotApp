@@ -11,20 +11,22 @@ struct ExampleMessageRowView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     let example: ExampleMessage
-    @State var highliteExampleId: UUID?
-    
+    @State private var userMessage = ""
+    @State private var assistantMessage = ""
     @State private var showEditExample = false
+    
+    @Binding var exampleArray: [ExampleMessage]
     
     var body: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading) {
                 HStack(alignment: .top) {
                     Text("User: ")
-                    Text("\(example.userMessage)")
+                    Text("\(userMessage)")
                 }
                 HStack(alignment: .top) {
                     Text("Assistant: ")
-                    Text("\(example.assistantMessage)")
+                    Text("\(assistantMessage)")
                 }
             }
             
@@ -34,31 +36,32 @@ struct ExampleMessageRowView: View {
                 showEditExample = true
             } label: {
                 Text("編集")
+                    .foregroundColor(.blue)
             }
             .buttonStyle(.plain)
-            .padding(.horizontal)
+            .padding(.horizontal, 4)
             .sheet(isPresented: $showEditExample) {
-                EditExampleView(example: example, editedExampleId: $highliteExampleId)
+                EditExampleView(example: example)
                     .frame(minWidth: 400, minHeight: 200)
             }
-        }
-        .background(example.id == highliteExampleId ? Color.teal : Color.clear)
-        .onChange(of: highliteExampleId) { highliteExampleId in
-            if highliteExampleId != nil {
-                disableHightlight()
+            
+            Button(action: onDelete) {
+                Text("削除")
+                    .foregroundColor(.red)
             }
+            .buttonStyle(.plain)
+            .padding(.horizontal, 4)
         }
         .onAppear {
-            disableHightlight()
+            userMessage = example.userMessage ?? ""
+            assistantMessage = example.assistantMessage ?? ""
         }
     }
     
-    private func disableHightlight() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            withAnimation(.easeInOut(duration: 1.0)) {
-                self.highliteExampleId = nil
-            }
-        }
+    private func onDelete() {
+        viewContext.delete(example)
+        exampleArray.removeAll { $0 == example }
+        try? viewContext.save()
     }
 }
 
@@ -66,6 +69,7 @@ struct ExampleMessageRowView_Previews: PreviewProvider {
     static var previews: some View {
         let context = PersistenceController.preview.container.viewContext
         let ex = ExampleMessage.fetchFirst(in: context)!
-        ExampleMessageRowView(example: ex, highliteExampleId: nil)
+        ExampleMessageRowView(example: ex, exampleArray: .constant([]))
+            .environment(\.managedObjectContext, context)
     }
 }

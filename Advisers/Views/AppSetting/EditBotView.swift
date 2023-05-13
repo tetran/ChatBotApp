@@ -14,6 +14,7 @@ struct EditBotView: View {
 
     @State private var name = ""
     @State private var preText = ""
+    @State private var exampleMessages: [ExampleMessage] = []
 
     @State private var showNewExample = false
     @State private var showEditExample = false
@@ -50,8 +51,8 @@ struct EditBotView: View {
 
                 LabeledContent("Exapmles") {
                     VStack {
-                        List(bot.exampleMessagesArray) { ex in
-                            ExampleMessageRowView(example: ex, highliteExampleId: highliteExampleId)
+                        List(exampleMessages) { ex in
+                            ExampleMessageRowView(example: ex, exampleArray: $exampleMessages)
                         }
                         .frame(minHeight: 200)
 
@@ -65,7 +66,7 @@ struct EditBotView: View {
                         .padding()
                         .buttonStyle(.plain)
                         .sheet(isPresented: $showNewExample) {
-                            NewExampleView(bot: bot, newExampleId: $highliteExampleId)
+                            NewExampleView(bot: bot, exampleArray: $exampleMessages)
                                 .frame(minWidth: 400, minHeight: 200)
                         }
                     }
@@ -77,6 +78,7 @@ struct EditBotView: View {
         .onAppear {
             name = bot.name
             preText = bot.preText ?? ""
+            exampleMessages = bot.exampleMessagesArray
         }
     }
 
@@ -84,7 +86,7 @@ struct EditBotView: View {
         guard name != bot.name || preText != bot.preText else {
             return
         }
-        
+
         bot.name = name
         bot.preText = preText
         try! viewContext.save()
@@ -95,6 +97,7 @@ struct EditBotView_Previews: PreviewProvider {
     static var previews: some View {
         let context = PersistenceController.preview.container.viewContext
         let firstBot = Bot.fetchFirst(in: context)
-        EditBotView(bot: firstBot!)
+        EditBotView(bot: firstBot ?? Bot())
+            .environment(\.managedObjectContext, context)
     }
 }

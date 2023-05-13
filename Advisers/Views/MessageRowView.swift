@@ -10,20 +10,38 @@ import SwiftUI
 struct MessageRowView: View {
     var message: Message
     
+    @State private var isHovered = false
+    
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                Text(message.postedBy)
-                    .bold()
-                Text(message.createdAt.appFormat())
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                
+        HStack(alignment: .top) {
+            VStack {
+                Image(systemName: "gear")
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                    .cornerRadius(5)
                 Spacer()
             }
-            Text(message.text)
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(alignment: .bottom) {
+                    Text(message.postedBy)
+                        .font(.headline)
+                    Text(message.createdAt.appFormat())
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    
+                    Spacer()
+                }
+                
+                Text(message.fullMessage)
+                    .lineSpacing(4)
+                    .textSelection(.enabled)
+            }
         }
-        .padding(.vertical, 4)
+        .padding(8)
+        .background(isHovered ? Style.messageHoverBGColor : Style.roomBGColor)
+        .onHover { hover in
+            isHovered = hover
+        }
     }
 }
 

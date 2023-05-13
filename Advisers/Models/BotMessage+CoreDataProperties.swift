@@ -39,7 +39,20 @@ extension BotMessage : Identifiable {
         }
     }
     
+    static func create(in context: NSManagedObjectContext, text: String, bot: Bot, room: Room) -> BotMessage {
+        let botMessage = BotMessage(context: context)
+        botMessage.id = UUID()
+        botMessage.bot = bot
+        botMessage.text = text
+        botMessage.room = room
+        botMessage.createdAt = Date()
+        
+        try! context.save()
+        
+        return botMessage
+    }
+    
     func toMessage() -> Message {
-        return Message(id: id, text: text, createdAt: createdAt, postedBy: bot.name)
+        return Message(id: id, text: text, createdAt: createdAt, postedBy: bot.name, destination: nil)
     }
 }

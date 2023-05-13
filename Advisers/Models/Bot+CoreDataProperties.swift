@@ -28,7 +28,7 @@ extension Bot {
     public var exampleMessagesArray: [ExampleMessage] {
         let set = exampleMessages as? Set<ExampleMessage> ?? []
         return set.sorted {
-            $0.createdAt < $1.createdAt
+            $0.createdAt! < $1.createdAt!
         }
     }
 }

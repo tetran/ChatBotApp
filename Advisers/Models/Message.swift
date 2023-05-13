@@ -16,6 +16,16 @@ struct Message: Identifiable {
     var createdAt: Date
     
     var postedBy: String
+    
+    var destination: String?
+    
+    var fullMessage: String {
+        if let destination = destination {
+            return "@\(destination)\n\(text)"
+        } else {
+            return text
+        }
+    }
 }
 
 extension Message: Hashable {

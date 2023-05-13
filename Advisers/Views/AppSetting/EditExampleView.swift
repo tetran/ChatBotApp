@@ -12,7 +12,6 @@ struct EditExampleView: View {
     @Environment(\.dismiss) private var dismiss
     
     let example: ExampleMessage
-    @Binding var editedExampleId: UUID?
     
     @State private var userMessage = ""
     @State private var assistantMessage = ""
@@ -46,8 +45,6 @@ struct EditExampleView: View {
                     
                     try! viewContext.save()
                     
-                    editedExampleId = example.id
-                    
                     dismiss()
                 } label: {
                     Text("保存")
@@ -58,8 +55,8 @@ struct EditExampleView: View {
             .padding()
         }
         .onAppear {
-            userMessage = example.userMessage
-            assistantMessage = example.assistantMessage
+            userMessage = example.userMessage ?? ""
+            assistantMessage = example.assistantMessage ?? ""
         }
     }
 }
@@ -68,6 +65,6 @@ struct EditExampleView_Previews: PreviewProvider {
     static var previews: some View {
         let context = PersistenceController.preview.container.viewContext
         let examples = try! context.fetch(ExampleMessage.fetchRequest()).first!
-        EditExampleView(example: examples, editedExampleId: .constant(nil))
+        EditExampleView(example: examples)
     }
 }

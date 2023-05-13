@@ -12,7 +12,7 @@ struct NewExampleView: View {
     @Environment(\.dismiss) private var dismiss
     
     let bot: Bot
-    @Binding var newExampleId: UUID?
+    @Binding var exampleArray: [ExampleMessage]
     
     @State private var userMessage = ""
     @State private var assistantMessage = ""
@@ -51,7 +51,7 @@ struct NewExampleView: View {
                     
                     try! viewContext.save()
                     
-                    newExampleId = newExample.id
+                    exampleArray.append(newExample)
                     
                     dismiss()
                 } label: {
@@ -69,6 +69,6 @@ struct NewExampleView_Previews: PreviewProvider {
     static var previews: some View {
         let context = PersistenceController.preview.container.viewContext
         let firstBot = Bot.fetchFirst(in: context)
-        NewExampleView(bot: firstBot!, newExampleId: .constant(nil))
+        NewExampleView(bot: firstBot!, exampleArray: .constant([]))
     }
 }

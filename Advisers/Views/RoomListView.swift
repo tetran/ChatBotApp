@@ -46,7 +46,7 @@ struct RoomListView: View {
                 Button {
                     showNewRoom = true
                 } label: {
-                    Label("部屋を追加する", systemImage: "plus")
+                    Label("Roomを追加する", systemImage: "plus")
                         .padding()
                 }
                 .padding()

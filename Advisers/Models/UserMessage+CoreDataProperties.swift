@@ -19,7 +19,8 @@ extension UserMessage {
     @NSManaged public var id: UUID
     @NSManaged public var text: String
     @NSManaged public var createdAt: Date
-    @NSManaged public var room: Room?
+    @NSManaged public var room: Room
+    @NSManaged public var destBot: Bot?
 
 }
 
@@ -29,7 +30,7 @@ extension UserMessage : Identifiable {
         let request: NSFetchRequest<UserMessage> = UserMessage.fetchRequest()
         request.fetchLimit = 1
         request.sortDescriptors = [NSSortDescriptor(keyPath : \UserMessage.createdAt, ascending:  true)]
-
+        
         do {
             return try context.fetch(request).first
         } catch {
@@ -38,7 +39,20 @@ extension UserMessage : Identifiable {
         }
     }
     
+    static func create(in context: NSManagedObjectContext, text: String, room: Room, destBot: Bot?) -> UserMessage {
+        let userMessage = UserMessage(context: context)
+        userMessage.id = UUID()
+        userMessage.text = text
+        userMessage.room = room
+        userMessage.destBot = destBot
+        userMessage.createdAt = Date()
+        
+        try! context.save()
+        
+        return userMessage
+    }
+    
     func toMessage() -> Message {
-        return Message(id: id, text: text, createdAt: createdAt, postedBy: "User")
+        return Message(id: id, text: text, createdAt: createdAt, postedBy: "User", destination: destBot?.name)
     }
 }

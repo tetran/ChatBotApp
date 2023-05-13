@@ -15,14 +15,13 @@ extension ExampleMessage {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<ExampleMessage> {
         return NSFetchRequest<ExampleMessage>(entityName: "ExampleMessage")
     }
-    
 
-    @NSManaged public var id: UUID
-    @NSManaged public var userMessage: String
-    @NSManaged public var assistantMessage: String
-    @NSManaged public var createdAt: Date
-    @NSManaged public var updatedAt: Date
-    @NSManaged public var bot: Bot
+    @NSManaged public var id: UUID?
+    @NSManaged public var userMessage: String?
+    @NSManaged public var assistantMessage: String?
+    @NSManaged public var createdAt: Date?
+    @NSManaged public var updatedAt: Date?
+    @NSManaged public var bot: Bot?
 
 }
 

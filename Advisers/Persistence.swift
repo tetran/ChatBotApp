@@ -24,6 +24,7 @@ struct PersistenceController {
         bot.updatedAt = fiveMinutesAgo
         
         let example = ExampleMessage(context: viewContext)
+        example.id = UUID()
         example.bot = bot
         example.userMessage = "こんにちは！"
         example.assistantMessage = "こんにちは！ご用ですか？"
