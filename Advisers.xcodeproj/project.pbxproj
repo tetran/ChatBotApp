@@ -18,6 +18,8 @@
 		5B1DD9882A0765C0008996DA /* APICommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1DD9872A0765C0008996DA /* APICommunicator.swift */; };
 		5B1DD98A2A07A866008996DA /* DevMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1DD9892A07A866008996DA /* DevMenuView.swift */; };
 		5B426F192A0A5AC9006294C0 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B426F182A0A5AC9006294C0 /* Style.swift */; };
+		5B6A6C3B2A0F875300303B4B /* OpenAIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6A6C3A2A0F875300303B4B /* OpenAIModel.swift */; };
+		5B6A6C3E2A0F882D00303B4B /* ModelsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6A6C3D2A0F882D00303B4B /* ModelsResponse.swift */; };
 		5B83CC842A0BA74F00A77FC6 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B83CC832A0BA74F00A77FC6 /* View+Extension.swift */; };
 		5BD871EF2A049DAB003A169E /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD871EE2A049DAB003A169E /* UserDataManager.swift */; };
 		5BD871F12A04A237003A169E /* EditBotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD871F02A04A237003A169E /* EditBotView.swift */; };
@@ -68,6 +70,8 @@
 		5B1DD9872A0765C0008996DA /* APICommunicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICommunicator.swift; sourceTree = "<group>"; };
 		5B1DD9892A07A866008996DA /* DevMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevMenuView.swift; sourceTree = "<group>"; };
 		5B426F182A0A5AC9006294C0 /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
+		5B6A6C3A2A0F875300303B4B /* OpenAIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIModel.swift; sourceTree = "<group>"; };
+		5B6A6C3D2A0F882D00303B4B /* ModelsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelsResponse.swift; sourceTree = "<group>"; };
 		5B83CC832A0BA74F00A77FC6 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		5BD871EE2A049DAB003A169E /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
 		5BD871F02A04A237003A169E /* EditBotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBotView.swift; sourceTree = "<group>"; };
@@ -125,6 +129,8 @@
 				5BD872072A06608A003A169E /* OpenAIConfig.swift */,
 				5B1DD9732A075A0C008996DA /* OpenAIClient.swift */,
 				5B1DD97E2A075F5C008996DA /* Usage.swift */,
+				5B6A6C3A2A0F875300303B4B /* OpenAIModel.swift */,
+				5B6A6C3C2A0F87B800303B4B /* Models */,
 				5B1DD9752A075CC0008996DA /* Chat */,
 			);
 			path = OpenAI;
@@ -150,6 +156,14 @@
 				5B1DD9722A0759F3008996DA /* OpenAI */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		5B6A6C3C2A0F87B800303B4B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5B6A6C3D2A0F882D00303B4B /* ModelsResponse.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		5BEFA4E72A036A41004B8537 = {
@@ -365,10 +379,12 @@
 				5BEFA51B2A036F4A004B8537 /* Bot+CoreDataClass.swift in Sources */,
 				5BEFA5262A037619004B8537 /* RoomView.swift in Sources */,
 				5B1DD97B2A075E6D008996DA /* ChatMessage.swift in Sources */,
+				5B6A6C3B2A0F875300303B4B /* OpenAIModel.swift in Sources */,
 				5B1DD97D2A075EBD008996DA /* ChatResponse.swift in Sources */,
 				5BD872082A06608A003A169E /* OpenAIConfig.swift in Sources */,
 				5BEFA4F42A036A41004B8537 /* AdvisersApp.swift in Sources */,
 				5BEFA5362A0391CA004B8537 /* UserMessage+CoreDataProperties.swift in Sources */,
+				5B6A6C3E2A0F882D00303B4B /* ModelsResponse.swift in Sources */,
 				5BEFA5372A0391CA004B8537 /* BotMessage+CoreDataClass.swift in Sources */,
 				5B1DD9842A0765A6008996DA /* APIRequest.swift in Sources */,
 				5BEFA51C2A036F4A004B8537 /* Bot+CoreDataProperties.swift in Sources */,

@@ -11,33 +11,39 @@ class UserDataManager {
     static let shared = UserDataManager()
 
     private init() {}
+    
+    enum Keys: String {
+        case organizationId = "OpenAI.organizationId"
+        case apiKey = "OpenAI.apiKey"
+        case model = "OpenAI.model"
+    }
 
     private let userDefaults = UserDefaults.standard
 
     var organizationId: String {
         get {
-            return userDefaults.string(forKey: "OpenAI.organizationId") ?? ""
+            return userDefaults.string(forKey: Keys.organizationId.rawValue) ?? ""
         }
         set {
-            userDefaults.setValue(newValue, forKey: "OpenAI.organizationId")
+            userDefaults.setValue(newValue, forKey: Keys.organizationId.rawValue)
         }
     }
 
     var apiKey: String {
         get {
-            return userDefaults.string(forKey: "OpenAI.apiKey") ?? ""
+            return userDefaults.string(forKey: Keys.apiKey.rawValue) ?? ""
         }
         set {
-            userDefaults.setValue(newValue, forKey: "OpenAI.apiKey")
+            userDefaults.setValue(newValue, forKey: Keys.apiKey.rawValue)
         }
     }
     
     var model: String {
         get {
-            return userDefaults.string(forKey: "OpenAI.model") ?? ""
+            return userDefaults.string(forKey: Keys.model.rawValue) ?? ""
         }
         set {
-            userDefaults.setValue(newValue, forKey: "OpenAI.model")
+            userDefaults.setValue(newValue, forKey: Keys.model.rawValue)
         }
     }
 }

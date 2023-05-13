@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct RoomConversationView: View {
+    @AppStorage(UserDataManager.Keys.model.rawValue) private var selectedModel: String = "gpt-3.5-turbo"
     @Environment(\.managedObjectContext) private var viewContext
 
     @State private var targetBot: Bot?
@@ -73,7 +74,7 @@ struct RoomConversationView: View {
                             let messages = buildMessages(userMessage: text, to: bot)
                             print("Messages: \(messages)")
 
-                            let params = ChatRequest(messages: messages)
+                            let params = ChatRequest(messages: messages, model: selectedModel)
                             let response = await OpenAIClient.shared.chat(params)
                             print(response ?? "None")
 

@@ -27,7 +27,33 @@ class OpenAIClient {
     
     private init() {}
     
-    func postJson<T: Encodable, U: Decodable>(_ path: String, parameters: T) async -> U? {
+    /// 利用可能なモデル一覧を取得する
+    func models() async -> ModelsResponse? {
+        return await get("/models")
+    }
+    
+    /// chatリクエストを行う
+    func chat(_ parameters: ChatRequest) async -> ChatResponse? {
+        print("Parameters: \(parameters)")
+        return await postJson("/chat/completions", parameters: parameters)
+    }
+    
+    private func get<U: Decodable>(_ path: String) async -> U? {
+        do {
+            let request = APIRequest(url: makeUrl(path), method: "GET", headers: makeHeader())
+            print("Request: \(request)")
+            
+            let response = try await communicator.performRequest(request)
+            print("Response: \(response)")
+            
+            return try responseDecoder.decode(U.self, from: response.body)
+        } catch {
+            print("Error: \(error)")
+            return nil
+        }
+    }
+    
+    private func postJson<T: Encodable, U: Decodable>(_ path: String, parameters: T) async -> U? {
         do {
             let requestBody = try requestEncoder.encode(parameters)
             print("Encoded Parameters: \(String(data: requestBody, encoding: .utf8) ?? "Failed")")
@@ -44,11 +70,6 @@ class OpenAIClient {
             print("Error: \(error)")
             return nil
         }
-    }
-    
-    func chat(_ parameters: ChatRequest) async -> ChatResponse? {
-        print("Parameters: \(parameters)")
-        return await postJson("/chat/completions", parameters: parameters)
     }
     
     private func makeUrl(_ path: String) -> String {
