@@ -7,7 +7,6 @@
         <attribute name="name" attributeType="String"/>
         <attribute name="preText" optional="YES" attributeType="String"/>
         <attribute name="updatedAt" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="exampleMessages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ExampleMessage" inverseName="bot" inverseEntity="ExampleMessage"/>
         <relationship name="roomBots" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RoomBot" inverseName="bot" inverseEntity="RoomBot"/>
     </entity>
     <entity name="BotMessage" representedClassName="BotMessage" syncable="YES">
@@ -16,14 +15,6 @@
         <attribute name="text" optional="YES" attributeType="String"/>
         <relationship name="bot" maxCount="1" deletionRule="Nullify" destinationEntity="Bot"/>
         <relationship name="room" maxCount="1" deletionRule="Nullify" destinationEntity="Room" inverseName="botMessages" inverseEntity="Room"/>
-    </entity>
-    <entity name="ExampleMessage" representedClassName="ExampleMessage" syncable="YES">
-        <attribute name="assistantMessage" attributeType="String"/>
-        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="updatedAt" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="userMessage" attributeType="String"/>
-        <relationship name="bot" maxCount="1" deletionRule="Nullify" destinationEntity="Bot" inverseName="exampleMessages" inverseEntity="Bot"/>
     </entity>
     <entity name="Room" representedClassName="Room" syncable="YES">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>

@@ -114,13 +114,6 @@ struct RoomConversationView: View {
         if let preText = bot.preText {
             messages.append(.system(content: preText))
         }
-        for example in bot.exampleMessagesArray {
-            if let userMessage = example.userMessage, let assistantMessage = example.assistantMessage {
-                messages.append(.user(content: userMessage))
-                messages.append(.assistant(content: assistantMessage))
-            }
-        }
-        messages.append(.system(content: "Now, we start a new conversation."))
         messages.append(.user(content: userMessage))
 
         return messages

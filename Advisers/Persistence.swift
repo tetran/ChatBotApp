@@ -23,14 +23,6 @@ struct PersistenceController {
         bot.createdAt = fiveMinutesAgo
         bot.updatedAt = fiveMinutesAgo
         
-        let example = ExampleMessage(context: viewContext)
-        example.id = UUID()
-        example.bot = bot
-        example.userMessage = "こんにちは！"
-        example.assistantMessage = "こんにちは！ご用ですか？"
-        example.createdAt = currentTime
-        example.updatedAt = currentTime
-        
         for i in 0..<20 {
             let newRoom = Room(context: viewContext)
             newRoom.id = UUID()

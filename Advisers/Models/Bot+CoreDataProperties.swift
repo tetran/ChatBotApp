@@ -22,31 +22,7 @@ extension Bot {
     @NSManaged public var icon: Data?
     @NSManaged public var createdAt: Date
     @NSManaged public var updatedAt: Date
-    @NSManaged public var exampleMessages: NSSet?
     @NSManaged public var roomBots: NSSet?
-
-    public var exampleMessagesArray: [ExampleMessage] {
-        let set = exampleMessages as? Set<ExampleMessage> ?? []
-        return set.sorted {
-            $0.createdAt! < $1.createdAt!
-        }
-    }
-}
-
-// MARK: Generated accessors for exampleMessages
-extension Bot {
-
-    @objc(addExampleMessagesObject:)
-    @NSManaged public func addToExampleMessages(_ value: ExampleMessage)
-
-    @objc(removeExampleMessagesObject:)
-    @NSManaged public func removeFromExampleMessages(_ value: ExampleMessage)
-
-    @objc(addExampleMessages:)
-    @NSManaged public func addToExampleMessages(_ values: NSSet)
-
-    @objc(removeExampleMessages:)
-    @NSManaged public func removeFromExampleMessages(_ values: NSSet)
 
 }
 

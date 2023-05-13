@@ -14,7 +14,6 @@ struct EditBotView: View {
 
     @State private var name = ""
     @State private var preText = ""
-    @State private var exampleMessages: [ExampleMessage] = []
 
     @State private var showNewExample = false
     @State private var showEditExample = false
@@ -48,37 +47,12 @@ struct EditBotView: View {
                         }
                 }
                 .padding()
-
-                LabeledContent("Exapmles") {
-                    VStack {
-                        List(exampleMessages) { ex in
-                            ExampleMessageRowView(example: ex, exampleArray: $exampleMessages)
-                        }
-                        .frame(minHeight: 200)
-
-                        // 追加するボタン
-                        Button {
-                            showNewExample = true
-                        } label: {
-                            Label("追加", systemImage: "plus")
-                                .padding()
-                        }
-                        .padding()
-                        .buttonStyle(.plain)
-                        .sheet(isPresented: $showNewExample) {
-                            NewExampleView(bot: bot, exampleArray: $exampleMessages)
-                                .frame(minWidth: 400, minHeight: 200)
-                        }
-                    }
-                }
-                .padding()
             }
         }
         .padding()
         .onAppear {
             name = bot.name
             preText = bot.preText ?? ""
-            exampleMessages = bot.exampleMessagesArray
         }
     }
 

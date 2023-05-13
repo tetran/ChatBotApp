@@ -22,9 +22,6 @@
 		5BD871EF2A049DAB003A169E /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD871EE2A049DAB003A169E /* UserDataManager.swift */; };
 		5BD871F12A04A237003A169E /* EditBotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD871F02A04A237003A169E /* EditBotView.swift */; };
 		5BD871F32A04A333003A169E /* NewBotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD871F22A04A333003A169E /* NewBotView.swift */; };
-		5BD871F52A04BB36003A169E /* NewExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD871F42A04BB36003A169E /* NewExampleView.swift */; };
-		5BD871F72A04BB46003A169E /* EditExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD871F62A04BB46003A169E /* EditExampleView.swift */; };
-		5BD871F92A063093003A169E /* ExampleMessageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD871F82A063093003A169E /* ExampleMessageRowView.swift */; };
 		5BD872002A063E3D003A169E /* RoomBot+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD871FE2A063E3D003A169E /* RoomBot+CoreDataClass.swift */; };
 		5BD872012A063E3D003A169E /* RoomBot+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD871FF2A063E3D003A169E /* RoomBot+CoreDataProperties.swift */; };
 		5BD872032A063F18003A169E /* RoomBotSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD872022A063F18003A169E /* RoomBotSelectView.swift */; };
@@ -39,8 +36,6 @@
 		5BEFA51C2A036F4A004B8537 /* Bot+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFA5162A036F4A004B8537 /* Bot+CoreDataProperties.swift */; };
 		5BEFA51D2A036F4A004B8537 /* Room+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFA5172A036F4A004B8537 /* Room+CoreDataClass.swift */; };
 		5BEFA51E2A036F4A004B8537 /* Room+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFA5182A036F4A004B8537 /* Room+CoreDataProperties.swift */; };
-		5BEFA51F2A036F4A004B8537 /* ExampleMessage+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFA5192A036F4A004B8537 /* ExampleMessage+CoreDataClass.swift */; };
-		5BEFA5202A036F4A004B8537 /* ExampleMessage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFA51A2A036F4A004B8537 /* ExampleMessage+CoreDataProperties.swift */; };
 		5BEFA5222A036FAE004B8537 /* RoomListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFA5212A036FAE004B8537 /* RoomListView.swift */; };
 		5BEFA5242A037196004B8537 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFA5232A037196004B8537 /* Date+Extension.swift */; };
 		5BEFA5262A037619004B8537 /* RoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFA5252A037619004B8537 /* RoomView.swift */; };
@@ -77,9 +72,6 @@
 		5BD871EE2A049DAB003A169E /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
 		5BD871F02A04A237003A169E /* EditBotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBotView.swift; sourceTree = "<group>"; };
 		5BD871F22A04A333003A169E /* NewBotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBotView.swift; sourceTree = "<group>"; };
-		5BD871F42A04BB36003A169E /* NewExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewExampleView.swift; sourceTree = "<group>"; };
-		5BD871F62A04BB46003A169E /* EditExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditExampleView.swift; sourceTree = "<group>"; };
-		5BD871F82A063093003A169E /* ExampleMessageRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleMessageRowView.swift; sourceTree = "<group>"; };
 		5BD871FE2A063E3D003A169E /* RoomBot+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomBot+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5BD871FF2A063E3D003A169E /* RoomBot+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomBot+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5BD872022A063F18003A169E /* RoomBotSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomBotSelectView.swift; sourceTree = "<group>"; };
@@ -96,8 +88,6 @@
 		5BEFA5162A036F4A004B8537 /* Bot+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Bot+CoreDataProperties.swift"; path = "Advisers/Models/Bot+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		5BEFA5172A036F4A004B8537 /* Room+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Room+CoreDataClass.swift"; path = "Advisers/Models/Room+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		5BEFA5182A036F4A004B8537 /* Room+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Room+CoreDataProperties.swift"; path = "Advisers/Models/Room+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		5BEFA5192A036F4A004B8537 /* ExampleMessage+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ExampleMessage+CoreDataClass.swift"; path = "Advisers/Models/ExampleMessage+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		5BEFA51A2A036F4A004B8537 /* ExampleMessage+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ExampleMessage+CoreDataProperties.swift"; path = "Advisers/Models/ExampleMessage+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		5BEFA5212A036FAE004B8537 /* RoomListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomListView.swift; sourceTree = "<group>"; };
 		5BEFA5232A037196004B8537 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		5BEFA5252A037619004B8537 /* RoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomView.swift; sourceTree = "<group>"; };
@@ -233,8 +223,6 @@
 				5BEFA5162A036F4A004B8537 /* Bot+CoreDataProperties.swift */,
 				5BEFA5172A036F4A004B8537 /* Room+CoreDataClass.swift */,
 				5BEFA5182A036F4A004B8537 /* Room+CoreDataProperties.swift */,
-				5BEFA5192A036F4A004B8537 /* ExampleMessage+CoreDataClass.swift */,
-				5BEFA51A2A036F4A004B8537 /* ExampleMessage+CoreDataProperties.swift */,
 				5BEFA5392A03961A004B8537 /* Message.swift */,
 			);
 			path = Models;
@@ -260,10 +248,7 @@
 				5BEFA54D2A03BC79004B8537 /* AppBasicSettingView.swift */,
 				5BEFA54F2A03BC8C004B8537 /* BotSettingView.swift */,
 				5BD871F02A04A237003A169E /* EditBotView.swift */,
-				5BD871F82A063093003A169E /* ExampleMessageRowView.swift */,
 				5BD871F22A04A333003A169E /* NewBotView.swift */,
-				5BD871F42A04BB36003A169E /* NewExampleView.swift */,
-				5BD871F62A04BB46003A169E /* EditExampleView.swift */,
 				5B1DD9892A07A866008996DA /* DevMenuView.swift */,
 			);
 			path = AppSetting;
@@ -350,7 +335,6 @@
 				5BEFA54C2A03BC53004B8537 /* AppSettingView.swift in Sources */,
 				5BEFA4FD2A036A42004B8537 /* Persistence.swift in Sources */,
 				5BEFA5222A036FAE004B8537 /* RoomListView.swift in Sources */,
-				5BD871F52A04BB36003A169E /* NewExampleView.swift in Sources */,
 				5BEFA5382A0391CA004B8537 /* BotMessage+CoreDataProperties.swift in Sources */,
 				5BFC40312A07DE7F002AEBEC /* RoomConversationView.swift in Sources */,
 				5BEFA51D2A036F4A004B8537 /* Room+CoreDataClass.swift in Sources */,
@@ -362,7 +346,6 @@
 				5BEFA53A2A03961A004B8537 /* Message.swift in Sources */,
 				5BEFA5482A03B38A004B8537 /* BasicRoomSettingView.swift in Sources */,
 				5BEFA5242A037196004B8537 /* Date+Extension.swift in Sources */,
-				5BEFA5202A036F4A004B8537 /* ExampleMessage+CoreDataProperties.swift in Sources */,
 				5BEFA5422A03AD42004B8537 /* NewRoomView.swift in Sources */,
 				5BEFA54E2A03BC79004B8537 /* AppBasicSettingView.swift in Sources */,
 				5BEFA5352A0391CA004B8537 /* UserMessage+CoreDataClass.swift in Sources */,
@@ -371,13 +354,11 @@
 				5BEFA5502A03BC8C004B8537 /* BotSettingView.swift in Sources */,
 				5BD872002A063E3D003A169E /* RoomBot+CoreDataClass.swift in Sources */,
 				5BD871F32A04A333003A169E /* NewBotView.swift in Sources */,
-				5BEFA51F2A036F4A004B8537 /* ExampleMessage+CoreDataClass.swift in Sources */,
 				5BD872012A063E3D003A169E /* RoomBot+CoreDataProperties.swift in Sources */,
 				5B1DD98A2A07A866008996DA /* DevMenuView.swift in Sources */,
 				5BEFA5462A03B327004B8537 /* ModifyRoomNameView.swift in Sources */,
 				5B83CC842A0BA74F00A77FC6 /* View+Extension.swift in Sources */,
 				5B1DD9742A075A0C008996DA /* OpenAIClient.swift in Sources */,
-				5BD871F92A063093003A169E /* ExampleMessageRowView.swift in Sources */,
 				5BEFA5002A036A42004B8537 /* Advisers.xcdatamodeld in Sources */,
 				5BD871F12A04A237003A169E /* EditBotView.swift in Sources */,
 				5B1DD9862A0765AE008996DA /* APIResponse.swift in Sources */,
@@ -388,7 +369,6 @@
 				5BD872082A06608A003A169E /* OpenAIConfig.swift in Sources */,
 				5BEFA4F42A036A41004B8537 /* AdvisersApp.swift in Sources */,
 				5BEFA5362A0391CA004B8537 /* UserMessage+CoreDataProperties.swift in Sources */,
-				5BD871F72A04BB46003A169E /* EditExampleView.swift in Sources */,
 				5BEFA5372A0391CA004B8537 /* BotMessage+CoreDataClass.swift in Sources */,
 				5B1DD9842A0765A6008996DA /* APIRequest.swift in Sources */,
 				5BEFA51C2A036F4A004B8537 /* Bot+CoreDataProperties.swift in Sources */,
