@@ -34,6 +34,7 @@ struct PersistenceController {
             userMessage.id = UUID()
             userMessage.room = newRoom
             userMessage.text = "Message from user \(i)\nHi, I am User!"
+            userMessage.destBot = bot
             userMessage.createdAt = fiveMinutesAgo
             
             let botMessage = BotMessage(context: viewContext)

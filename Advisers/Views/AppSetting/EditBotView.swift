@@ -14,6 +14,7 @@ struct EditBotView: View {
 
     @State private var name = ""
     @State private var preText = ""
+    @State private var themeColor: Color = .white
 
     @State private var showNewExample = false
     @State private var showEditExample = false
@@ -28,7 +29,13 @@ struct EditBotView: View {
                 TextField("名前", text: $name, onCommit: saveData)
                     .padding()
                     .textFieldStyle(.roundedBorder)
-
+                
+            ColorPicker("テーマカラー", selection: $themeColor)
+                .onChange(of: themeColor) { newValue in
+                    saveColor(newValue)
+                }
+                .padding()
+                
                 LabeledContent("Pre Text") {
                     TextEditor(text: $preText)
                         .padding(4)
@@ -53,6 +60,7 @@ struct EditBotView: View {
         .onAppear {
             name = bot.name
             preText = bot.preText ?? ""
+            themeColor = Color(bot.themeColor)
         }
     }
 
@@ -64,6 +72,17 @@ struct EditBotView: View {
         bot.name = name
         bot.preText = preText
         try! viewContext.save()
+    }
+    
+    private func saveColor(_ color: Color) {
+        let nsColor = NSColor(color)
+        if let rgba = nsColor.rgbaComponents {
+            bot.colorR = rgba.red
+            bot.colorG = rgba.green
+            bot.colorB = rgba.blue
+            bot.colorA = rgba.alpha
+            try! viewContext.save()
+        }
     }
 }
 

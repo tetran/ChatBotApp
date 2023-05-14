@@ -39,6 +39,8 @@ struct AppBasicSettingView: View {
             .padding()
         }
         .onAppear {
+            models = [selectedModel]
+            
             Task {
                 let openAIModels = await OpenAIClient.shared.models()
                 if let models = openAIModels?.data {

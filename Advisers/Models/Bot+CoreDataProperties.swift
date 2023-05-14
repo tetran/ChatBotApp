@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 extension Bot {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Bot> {
@@ -23,7 +22,11 @@ extension Bot {
     @NSManaged public var createdAt: Date
     @NSManaged public var updatedAt: Date
     @NSManaged public var roomBots: NSSet?
-
+    @NSManaged public var colorR: Double
+    @NSManaged public var colorG: Double
+    @NSManaged public var colorB: Double
+    @NSManaged public var colorA: Double
+    
 }
 
 extension Bot: Identifiable {
@@ -50,5 +53,9 @@ extension Bot: Identifiable {
             print("Error occurred while fetching: \(error)")
             return []
         }
+    }
+    
+    var themeColor: NativeColor {
+        NativeColor(red: colorR, green: colorG, blue: colorB, alpha: colorA)
     }
 }

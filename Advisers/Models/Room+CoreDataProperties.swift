@@ -23,6 +23,7 @@ extension Room {
     @NSManaged public var botMessages: NSSet?
     @NSManaged public var userMessages: NSSet?
     @NSManaged public var roomBots: NSSet?
+    @NSManaged public var summaries: NSSet?
 
 }
 
@@ -76,7 +77,7 @@ extension Room : Identifiable {
         let userMessages: [Message] = userMessages?.allObjects.map { ($0 as! UserMessage).toMessage() } ?? []
         let botMessages: [Message] = botMessages?.allObjects.map { ($0 as! BotMessage).toMessage() } ?? []
         return (userMessages + botMessages).sorted {
-            $0.createdAt.timeIntervalSince1970 < $1.createdAt.timeIntervalSince1970
+            $0.postedAt.timeIntervalSince1970 < $1.postedAt.timeIntervalSince1970
         }
     }
 
