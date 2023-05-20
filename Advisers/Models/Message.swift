@@ -19,19 +19,19 @@ struct Message: Identifiable {
     
     var postedTo: String?
     
-    var senderType: SenderType
+    var messageType: MessageType
     
     var senderColor: Color?
     
     var receiverColor: Color?
     
-    init(id: UUID, text: String, postedAt: Date, postedBy: String, postedTo: String? = nil, senderType: SenderType, senderColor: NativeColor? = nil, receiverColor: NativeColor? = nil) {
+    init(id: UUID, text: String, postedAt: Date, postedBy: String, postedTo: String? = nil, messageType: MessageType, senderColor: NativeColor? = nil, receiverColor: NativeColor? = nil) {
         self.id = id
         self.text = text
         self.postedAt = postedAt
         self.postedBy = postedBy
         self.postedTo = postedTo
-        self.senderType = senderType
+        self.messageType = messageType
         if let senderColor = senderColor {
             self.senderColor = Color(senderColor)
         }
@@ -47,7 +47,8 @@ extension Message: Hashable {
     }
 }
 
-enum SenderType {
+enum MessageType {
     case user
     case bot
+    case summary
 }

@@ -22,11 +22,13 @@ struct RoomBotSettingView: View {
             Button {
                 showAddBot = true
             } label: {
-                Label("Add Bot", systemImage: "plus")
+                Label("Bot追加", systemImage: "plus")
             }
             .sheet(isPresented: $showAddBot) {
                 RoomBotSelectView(room: room, newBotId: $newBotId, assignedBots: $assignedBots)
+                    .frame(width: 300, height: 200)
             }
+            .buttonStyle(.plain)
 
             ForEach(assignedBots) { bot in
                 HStack {
@@ -42,8 +44,9 @@ struct RoomBotSettingView: View {
                     } label: {
                         Label("外す", systemImage: "xmark")
                     }
+                    .buttonStyle(.plain)
                 }
-                .padding()
+                .padding(4)
                 .background(bot.id == newBotId ? Color.teal : Color.clear)
                 .cornerRadius(4)
             }

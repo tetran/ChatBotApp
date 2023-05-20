@@ -21,6 +21,11 @@
 		5B6A6C3B2A0F875300303B4B /* OpenAIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6A6C3A2A0F875300303B4B /* OpenAIModel.swift */; };
 		5B6A6C3E2A0F882D00303B4B /* ModelsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6A6C3D2A0F882D00303B4B /* ModelsResponse.swift */; };
 		5B83CC842A0BA74F00A77FC6 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B83CC832A0BA74F00A77FC6 /* View+Extension.swift */; };
+		5B963B7E2A189097005921F5 /* JSONHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B963B7D2A189097005921F5 /* JSONHelper.swift */; };
+		5B963B802A18A580005921F5 /* MessageBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B963B7F2A18A580005921F5 /* MessageBuilder.swift */; };
+		5B963B822A18CAD4005921F5 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B963B812A18CAD4005921F5 /* AppState.swift */; };
+		5BB0AA8A2A10D799003A8804 /* Summary+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB0AA882A10D799003A8804 /* Summary+CoreDataClass.swift */; };
+		5BB0AA8B2A10D799003A8804 /* Summary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB0AA892A10D799003A8804 /* Summary+CoreDataProperties.swift */; };
 		5BD871EF2A049DAB003A169E /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD871EE2A049DAB003A169E /* UserDataManager.swift */; };
 		5BD871F12A04A237003A169E /* EditBotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD871F02A04A237003A169E /* EditBotView.swift */; };
 		5BD871F32A04A333003A169E /* NewBotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD871F22A04A333003A169E /* NewBotView.swift */; };
@@ -73,6 +78,11 @@
 		5B6A6C3A2A0F875300303B4B /* OpenAIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIModel.swift; sourceTree = "<group>"; };
 		5B6A6C3D2A0F882D00303B4B /* ModelsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelsResponse.swift; sourceTree = "<group>"; };
 		5B83CC832A0BA74F00A77FC6 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
+		5B963B7D2A189097005921F5 /* JSONHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONHelper.swift; sourceTree = "<group>"; };
+		5B963B7F2A18A580005921F5 /* MessageBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBuilder.swift; sourceTree = "<group>"; };
+		5B963B812A18CAD4005921F5 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		5BB0AA882A10D799003A8804 /* Summary+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Summary+CoreDataClass.swift"; path = "Advisers/Models/Summary+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		5BB0AA892A10D799003A8804 /* Summary+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Summary+CoreDataProperties.swift"; path = "Advisers/Models/Summary+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		5BD871EE2A049DAB003A169E /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
 		5BD871F02A04A237003A169E /* EditBotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBotView.swift; sourceTree = "<group>"; };
 		5BD871F22A04A333003A169E /* NewBotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBotView.swift; sourceTree = "<group>"; };
@@ -187,10 +197,13 @@
 			children = (
 				5BEFA4F32A036A41004B8537 /* AdvisersApp.swift */,
 				5BEFA4F52A036A41004B8537 /* ContentView.swift */,
+				5B963B812A18CAD4005921F5 /* AppState.swift */,
 				5BEFA4FC2A036A42004B8537 /* Persistence.swift */,
 				5BEFA5232A037196004B8537 /* Date+Extension.swift */,
 				5BD871EE2A049DAB003A169E /* UserDataManager.swift */,
 				5B426F182A0A5AC9006294C0 /* Style.swift */,
+				5B963B7D2A189097005921F5 /* JSONHelper.swift */,
+				5B963B7F2A18A580005921F5 /* MessageBuilder.swift */,
 				5B1DD9822A07658A008996DA /* API */,
 				5BEFA5082A036A61004B8537 /* Models */,
 				5BEFA5072A036A5A004B8537 /* Views */,
@@ -213,13 +226,13 @@
 		5BEFA5072A036A5A004B8537 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5B83CC832A0BA74F00A77FC6 /* View+Extension.swift */,
 				5BEFA5212A036FAE004B8537 /* RoomListView.swift */,
 				5BEFA5252A037619004B8537 /* RoomView.swift */,
 				5BFC40302A07DE7F002AEBEC /* RoomConversationView.swift */,
 				5BEFA5272A0386FA004B8537 /* MessageRowView.swift */,
 				5BEFA5402A03AD1D004B8537 /* AppSetting */,
 				5BEFA53F2A03AD13004B8537 /* RoomSetting */,
-				5B83CC832A0BA74F00A77FC6 /* View+Extension.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -227,6 +240,8 @@
 		5BEFA5082A036A61004B8537 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				5BB0AA882A10D799003A8804 /* Summary+CoreDataClass.swift */,
+				5BB0AA892A10D799003A8804 /* Summary+CoreDataProperties.swift */,
 				5BD871FE2A063E3D003A169E /* RoomBot+CoreDataClass.swift */,
 				5BD871FF2A063E3D003A169E /* RoomBot+CoreDataProperties.swift */,
 				5BEFA5312A0391CA004B8537 /* UserMessage+CoreDataClass.swift */,
@@ -356,6 +371,7 @@
 				5BEFA4F62A036A41004B8537 /* ContentView.swift in Sources */,
 				5BEFA5282A0386FA004B8537 /* MessageRowView.swift in Sources */,
 				5B1DD97F2A075F5C008996DA /* Usage.swift in Sources */,
+				5B963B802A18A580005921F5 /* MessageBuilder.swift in Sources */,
 				5BEFA5442A03B128004B8537 /* RoomSettingView.swift in Sources */,
 				5BEFA53A2A03961A004B8537 /* Message.swift in Sources */,
 				5BEFA5482A03B38A004B8537 /* BasicRoomSettingView.swift in Sources */,
@@ -364,6 +380,7 @@
 				5BEFA54E2A03BC79004B8537 /* AppBasicSettingView.swift in Sources */,
 				5BEFA5352A0391CA004B8537 /* UserMessage+CoreDataClass.swift in Sources */,
 				5BEFA54A2A03B7C0004B8537 /* RoomBotSettingView.swift in Sources */,
+				5B963B822A18CAD4005921F5 /* AppState.swift in Sources */,
 				5BD872032A063F18003A169E /* RoomBotSelectView.swift in Sources */,
 				5BEFA5502A03BC8C004B8537 /* BotSettingView.swift in Sources */,
 				5BD872002A063E3D003A169E /* RoomBot+CoreDataClass.swift in Sources */,
@@ -380,8 +397,11 @@
 				5BEFA5262A037619004B8537 /* RoomView.swift in Sources */,
 				5B1DD97B2A075E6D008996DA /* ChatMessage.swift in Sources */,
 				5B6A6C3B2A0F875300303B4B /* OpenAIModel.swift in Sources */,
+				5BB0AA8B2A10D799003A8804 /* Summary+CoreDataProperties.swift in Sources */,
+				5B963B7E2A189097005921F5 /* JSONHelper.swift in Sources */,
 				5B1DD97D2A075EBD008996DA /* ChatResponse.swift in Sources */,
 				5BD872082A06608A003A169E /* OpenAIConfig.swift in Sources */,
+				5BB0AA8A2A10D799003A8804 /* Summary+CoreDataClass.swift in Sources */,
 				5BEFA4F42A036A41004B8537 /* AdvisersApp.swift in Sources */,
 				5BEFA5362A0391CA004B8537 /* UserMessage+CoreDataProperties.swift in Sources */,
 				5B6A6C3E2A0F882D00303B4B /* ModelsResponse.swift in Sources */,

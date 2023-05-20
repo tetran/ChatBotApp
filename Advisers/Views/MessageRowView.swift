@@ -23,7 +23,7 @@ struct MessageRowView: View {
     var body: some View {
         HStack(alignment: .top) {
             VStack {
-                Image(systemName: message.senderType == .user ? "person.crop.square" : "poweroutlet.type.b")
+                Image(systemName: message.messageType == .user ? "person.crop.square" : "poweroutlet.type.b")
                     .resizable()
                     .frame(width: 40, height: 40)
                     .cornerRadius(5)

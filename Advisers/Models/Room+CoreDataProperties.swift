@@ -76,7 +76,8 @@ extension Room : Identifiable {
     func allMessages() -> [Message] {
         let userMessages: [Message] = userMessages?.allObjects.map { ($0 as! UserMessage).toMessage() } ?? []
         let botMessages: [Message] = botMessages?.allObjects.map { ($0 as! BotMessage).toMessage() } ?? []
-        return (userMessages + botMessages).sorted {
+        let summaries: [Message] = summaries?.allObjects.map { ($0 as! Summary).toMessage() } ?? []
+        return (userMessages + botMessages + summaries).sorted {
             $0.postedAt.timeIntervalSince1970 < $1.postedAt.timeIntervalSince1970
         }
     }

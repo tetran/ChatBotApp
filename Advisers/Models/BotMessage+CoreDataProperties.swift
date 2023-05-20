@@ -53,6 +53,6 @@ extension BotMessage : Identifiable {
     }
     
     func toMessage() -> Message {
-        return Message(id: id, text: text, postedAt: createdAt, postedBy: bot.name, senderType: .bot, senderColor: bot.themeColor)
+        return Message(id: id, text: text, postedAt: createdAt, postedBy: bot.name, messageType: .bot, senderColor: bot.themeColor)
     }
 }

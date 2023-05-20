@@ -16,22 +16,30 @@ struct NewRoomView: View {
     
     var body: some View {
         VStack {
-            Form {
-                Section(header: Text("New Room")) {
-                    TextField("名前", text: $roomName)
-                        .padding()
-                }
-            }
-            .padding(20)
-            
             HStack {
+                Text("新規Room作成")
+                    .font(.title2)
+                
                 Spacer()
                 
                 Button {
                     dismiss()
                 } label: {
-                    Text("キャンセル")
+                    Image(systemName: "xmark")
+                        .bold()
                 }
+                .buttonStyle(.plain)
+            }
+            .padding()
+            
+            Form {
+                TextField("名前", text: $roomName)
+                    .padding()
+            }
+            .padding(20)
+            
+            HStack {
+                Spacer()
                 
                 Button {
                     let room = Room(context: viewContext)
@@ -44,9 +52,10 @@ struct NewRoomView: View {
                     newRoom = room
                     dismiss()
                 } label: {
-                    Text("Room作成")
+                    Text("作成")
                 }
                 .padding(.leading)
+                .buttonStyle(.plain)
                 .disabled(roomName.isEmpty)
             }
             .padding()

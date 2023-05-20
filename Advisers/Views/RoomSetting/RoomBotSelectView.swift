@@ -22,24 +22,44 @@ struct RoomBotSelectView: View {
     }
     
     var body: some View {
-        List {
-            ForEach(selectableBots) { bot in
+        VStack {
+            HStack {
+                Text("Bot追加")
+                    .font(.title2)
+                
+                Spacer()
+                
                 Button {
-                    let roomBot = RoomBot(context: viewContext)
-                    roomBot.room = room
-                    roomBot.bot = bot
-                    roomBot.attendedAt = Date()
-                    
-                    try! viewContext.save()
-                    
-                    assignedBots.append(bot)
-                    newBotId = bot.id
                     dismiss()
                 } label: {
-                    Text(bot.name)
+                    Image(systemName: "xmark")
+                        .bold()
+                }
+                .buttonStyle(.plain)
+            }
+            
+            List {
+                ForEach(selectableBots) { bot in
+                    Button {
+                        let roomBot = RoomBot(context: viewContext)
+                        roomBot.room = room
+                        roomBot.bot = bot
+                        roomBot.attendedAt = Date()
+                        
+                        try! viewContext.save()
+                        
+                        assignedBots.append(bot)
+                        newBotId = bot.id
+                        
+                        dismiss()
+                    } label: {
+                        Label(bot.name, systemImage: "plus")
+                    }
+                    .buttonStyle(.plain)
                 }
             }
         }
+        .padding()
     }
 }
 
