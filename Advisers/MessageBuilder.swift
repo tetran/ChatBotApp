@@ -14,8 +14,7 @@ struct MessageBuilder {
     static func buildUserMessages(newMessage: Message, to bot: Bot, histories: [Message]) -> [ChatMessage] {
         let systemMessage = """
         The following is a conversation between a human and AI assistant. The assistant is a helpful, creative, clever, and very friendly.
-        Continue the conversation below as `\(bot.name)`. When "\(separatorOfSummary)" section given, consider its content.
-        Response should be in markdown format.
+        Continue the conversation below as `\(bot.name)`. Response should be in markdown format.
         """
 
         var preTexts: [String] = [systemMessage]
@@ -25,38 +24,37 @@ struct MessageBuilder {
 
         return buildMessages(
             preTexts: preTexts,
-            histories: selectAfterLastSummary(histories: histories),
-            instruction: "`\(bot.name)` said to `Human`: "
+            histories: histories,
+            instruction: "`\(bot.name)` told `Human`: "
         )
     }
 
     static func buildSummarizeMessage(histories: [Message]) -> [ChatMessage] {
         let systemMessage = """
-        The following is a conversation between a human and AI assistant(s).
+        You are an editor of a leading newspaper, and very good at summarizing conversations.
         """
         
         let instruction = """
         << Instruction >>
-        Please summarize the above conversation by topic in four sections respectively: "Topic", "Summary of Discussion", "Conclusion" and "Impressions". \
-        When "\(separatorOfSummary)" section given, consider its content.
+        Summarize the above conversation briefly by topic in four sections respectively: "Title", "Summary of Discussion", "Conclusion".
         Response should be in markdown format, with bullet points for "Summary of Discussion" and "Conclusion". All responses should be in Japanese.
         """
-
-        let historiesAfterSummary = selectAfterLastSummary(histories: histories)
         
-        return buildMessages(preTexts: [systemMessage], histories: historiesAfterSummary, instruction: instruction)
+        return buildMessages(preTexts: [systemMessage], histories: histories, instruction: instruction)
     }
 
     private static func buildMessages(preTexts: [String], histories: [Message], instruction: String) -> [ChatMessage] {
         var messages: [ChatMessage] = []
         messages.append(contentsOf: preTexts.map { .system(content: $0) })
 
+        let historiesAfterSummary = selectAfterLastSummary(histories: histories)
+        
         var newMessages: [String] = []
-        if let first = histories.first, first.messageType == .summary {
-            newMessages.append("\(separatorOfSummary)\n\(first.text)\n\n<< Conversation >>")
-            newMessages.append(contentsOf: historiesToJson(histories: Array(histories[1...])))
+        if let first = historiesAfterSummary.first, first.messageType == .summary {
+            messages.append(.system(content: "Here is a summary of previous conversation. Consider this when responding.\n\(separatorOfSummary)\n\(first.text)"))
+            newMessages.append(contentsOf: historiesToJson(histories: Array(historiesAfterSummary[1...])))
         } else {
-            newMessages.append(contentsOf: historiesToJson(histories: histories))
+            newMessages.append(contentsOf: historiesToJson(histories: historiesAfterSummary))
         }
         newMessages.append(instruction)
 
@@ -68,9 +66,9 @@ struct MessageBuilder {
         return histories.compactMap { msg in
             switch(msg.messageType) {
             case .bot:
-                return "`\(msg.postedBy)` said to `Human`: \(msg.text)"
+                return "`\(msg.postedBy)` told `Human`: \(msg.text)"
             case .user:
-                return "`Human` said to `\(msg.postedTo ?? "Robot")`: \(msg.text)"
+                return "`Human` told `\(msg.postedTo ?? "Robot")`: \(msg.text)"
             default:
                 return nil
             }
