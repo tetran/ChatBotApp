@@ -10,34 +10,45 @@ import SwiftUI
 struct RoomConversationView: View {
     @AppStorage(UserDataManager.Keys.model.rawValue) private var selectedModel: String = "gpt-3.5-turbo"
     @Environment(\.managedObjectContext) private var viewContext
-
+    
     @State private var targetBot: Bot?
-
+    
     @Binding var newText: String
     @Binding var newMessageAdded: Bool
     @Binding var messages: [Message]
     @Binding var editorHeight: CGFloat
-
+    
     let room: Room
     let assignedBots: [Bot]
+    
+    var canSend: Bool {
+        targetBot != nil && !newText.isEmpty
+    }
 
     var body: some View {
         ZStack {
-            TextEditor(text: $newText)
-                .font(.system(size: 16))
-                .lineSpacing(6)
-                .autocorrectionDisabled()
-                .padding(.top, 48)
-                .padding(.horizontal)
-                .onChange(of: newText) { _ in
-                    withAnimation(.easeInOut(duration: 0.1)) {
-                        editorHeight = calcEditorHeight()
-                    }
+            CustomTextEditor(text: $newText) {
+                guard canSend, let bot = targetBot else { return }
+                
+                let userMessage = addNewMessage()
+                Task {
+                    await sendNewMessage(userMessage: userMessage, to: bot)
                 }
-                .onAppear {
+            }
+            .lineSpacing(6)
+            .padding(.top, 48)
+            .padding(.leading, 16)
+            .padding(.trailing, 92)
+            .onChange(of: newText) { _ in
+                withAnimation(.easeInOut(duration: 0.1)) {
                     editorHeight = calcEditorHeight()
                 }
+            }
+            .onAppear {
+                editorHeight = calcEditorHeight()
+            }
 
+            // Bot選択
             VStack {
                 Picker("", selection: $targetBot) {
                     ForEach(assignedBots) { bot in
@@ -54,47 +65,34 @@ struct RoomConversationView: View {
             }
 
 
+            // 送信ボタン
             VStack {
                 Spacer()
                 HStack {
                     Spacer()
                     Button {
-                        let userMessage = UserMessage.create(in: viewContext, text: newText, room: room, destBot: targetBot).toMessage()
-                        messages.append(userMessage)
-
-                        newText = ""
-                        newMessageAdded = true
-
                         guard let bot = targetBot else {
                             return
                         }
-
+                        
+                        let userMessage = addNewMessage()
                         Task {
-                            let messages = MessageBuilder.buildUserMessages(newMessage: userMessage, to: bot, histories: self.messages)
-                            print("================ Messages:")
-                            messages.forEach { msg in
-                                print("\(msg)")
-                            }
-
-                            let params = ChatRequest(messages: messages, model: selectedModel)
-                            let response = await OpenAIClient.shared.chat(params)
-                            print(response ?? "None")
-
-                            if let message = response?.choices.first?.message {
-                                let botMessage = BotMessage.create(in: viewContext, text: message.content, bot: bot, room: room)
-                                self.messages.append(botMessage.toMessage())
-                                newMessageAdded = true
-                            }
+                            await sendNewMessage(userMessage: userMessage, to: bot)
                         }
                     } label: {
                         Label("送信", systemImage: "paperplane.fill")
+                            .foregroundColor(.white)
+                            .font(.title2)
                     }
-                    .padding()
+                    .padding(8)
                     .buttonStyle(.plain)
                     .font(.title2)
-                    .disabled(targetBot == nil || newText.isEmpty)
+                    .disabled(!canSend)
+                    .background(Color.accentColor.opacity(canSend ? 1 : 0.8))
+                    .cornerRadius(4)
                 }
             }
+            .padding(8)
         }
         .background(Color(NSColor.textBackgroundColor))
         .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -108,6 +106,36 @@ struct RoomConversationView: View {
     private func calcEditorHeight() -> CGFloat {
         let newLineCount = newText.filter { $0 == "\n" }.count
         return min(CGFloat(newLineCount) * 22 + 150, 480)
+    }
+    
+    private func addNewMessage() -> Message {
+        let userMessage = UserMessage.create(in: viewContext, text: newText, room: room, destBot: targetBot).toMessage()
+        messages.append(userMessage)
+
+        newText = ""
+        newMessageAdded = true
+        
+        return userMessage
+    }
+    
+    private func sendNewMessage(userMessage: Message, to bot: Bot) async {
+        let messages = MessageBuilder.buildUserMessages(newMessage: userMessage, to: bot, histories: self.messages)
+        print("================ Messages:")
+        messages.forEach { msg in
+            print("\(msg)")
+        }
+
+        let params = ChatRequest(messages: messages, model: selectedModel)
+        let response = await OpenAIClient.shared.chat(params)
+        
+        print("================ Response:")
+        print(response ?? "None")
+
+        if let message = response?.choices.first?.message {
+            let botMessage = BotMessage.create(in: viewContext, text: message.content, bot: bot, room: room)
+            self.messages.append(botMessage.toMessage())
+            newMessageAdded = true
+        }
     }
 }
 

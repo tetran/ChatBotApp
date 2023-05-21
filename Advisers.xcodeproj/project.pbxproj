@@ -33,6 +33,7 @@
 		5BD872012A063E3D003A169E /* RoomBot+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD871FF2A063E3D003A169E /* RoomBot+CoreDataProperties.swift */; };
 		5BD872032A063F18003A169E /* RoomBotSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD872022A063F18003A169E /* RoomBotSelectView.swift */; };
 		5BD872082A06608A003A169E /* OpenAIConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD872072A06608A003A169E /* OpenAIConfig.swift */; };
+		5BD87C902A19F30F00437E4E /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD87C8F2A19F30F00437E4E /* CustomTextEditor.swift */; };
 		5BEFA4F42A036A41004B8537 /* AdvisersApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFA4F32A036A41004B8537 /* AdvisersApp.swift */; };
 		5BEFA4F62A036A41004B8537 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFA4F52A036A41004B8537 /* ContentView.swift */; };
 		5BEFA4F82A036A42004B8537 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BEFA4F72A036A42004B8537 /* Assets.xcassets */; };
@@ -90,6 +91,7 @@
 		5BD871FF2A063E3D003A169E /* RoomBot+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoomBot+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5BD872022A063F18003A169E /* RoomBotSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomBotSelectView.swift; sourceTree = "<group>"; };
 		5BD872072A06608A003A169E /* OpenAIConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIConfig.swift; sourceTree = "<group>"; };
+		5BD87C8F2A19F30F00437E4E /* CustomTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditor.swift; sourceTree = "<group>"; };
 		5BEFA4F02A036A41004B8537 /* Advisers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Advisers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BEFA4F32A036A41004B8537 /* AdvisersApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvisersApp.swift; sourceTree = "<group>"; };
 		5BEFA4F52A036A41004B8537 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -176,6 +178,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		5BD87C8E2A19F2E900437E4E /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				5BD87C8F2A19F30F00437E4E /* CustomTextEditor.swift */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
 		5BEFA4E72A036A41004B8537 = {
 			isa = PBXGroup;
 			children = (
@@ -207,6 +217,7 @@
 				5B1DD9822A07658A008996DA /* API */,
 				5BEFA5082A036A61004B8537 /* Models */,
 				5BEFA5072A036A5A004B8537 /* Views */,
+				5BD87C8E2A19F2E900437E4E /* CustomView */,
 				5BEFA4F72A036A42004B8537 /* Assets.xcassets */,
 				5BEFA5012A036A42004B8537 /* Advisers.entitlements */,
 				5BEFA4FE2A036A42004B8537 /* Advisers.xcdatamodeld */,
@@ -387,6 +398,7 @@
 				5BD871F32A04A333003A169E /* NewBotView.swift in Sources */,
 				5BD872012A063E3D003A169E /* RoomBot+CoreDataProperties.swift in Sources */,
 				5B1DD98A2A07A866008996DA /* DevMenuView.swift in Sources */,
+				5BD87C902A19F30F00437E4E /* CustomTextEditor.swift in Sources */,
 				5BEFA5462A03B327004B8537 /* ModifyRoomNameView.swift in Sources */,
 				5B83CC842A0BA74F00A77FC6 /* View+Extension.swift in Sources */,
 				5B1DD9742A075A0C008996DA /* OpenAIClient.swift in Sources */,

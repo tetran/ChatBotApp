@@ -76,7 +76,6 @@ struct RoomView: View {
                                 .id(spacerId)
                         }
                     }
-                    
                 }
                 
                 VStack {
