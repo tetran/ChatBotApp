@@ -24,7 +24,16 @@ struct RoomView: View {
 
     let room: Room
     
-    let spacerId = "BOTTOM_SPACER"
+    private var messagesAfterLastSummary: [Message] {
+       guard let summaryIndex = messages.lastIndex(where: { $0.messageType == .summary }) else {
+           return messages
+       }
+
+       return Array(messages[(summaryIndex + 1)...])
+    }
+    
+    private let spacerId = "BOTTOM_SPACER"
+    private let numRequiredMesagesForSummary = 6 // 3往復
     
     var body: some View {
         VStack {
@@ -95,6 +104,7 @@ struct RoomView: View {
                             .stroke(Color.gray, lineWidth: 1)
                     )
                     .background(Color.roomBG)
+                    .disabled(messagesAfterLastSummary.count < numRequiredMesagesForSummary)
                 }
                 .padding(8)
             }
@@ -127,6 +137,7 @@ struct RoomView: View {
 
         let params = ChatRequest(messages: messages, model: selectedModel)
         let response = await OpenAIClient.shared.chat(params)
+        print("================ Response:")
         print(response ?? "None")
 
         if let message = response?.choices.first?.message {
