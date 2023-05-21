@@ -36,7 +36,7 @@ struct MessageBuilder {
         
         let instruction = """
         << Instruction >>
-        Summarize the above conversation briefly by topic in four sections respectively: "Title", "Summary of Discussion", "Conclusion".
+        Summarize the above conversation briefly by topic in three sections respectively: "Title", "Summary of Discussion", "Conclusion".
         Response should be in markdown format, with bullet points for "Summary of Discussion" and "Conclusion". All responses should be in Japanese.
         """
         
