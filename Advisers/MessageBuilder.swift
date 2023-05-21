@@ -9,15 +9,13 @@ import Foundation
 
 struct MessageBuilder {
     
-    static let separatorOfSummary = "## Summary of Previous"
+    static let separatorOfSummary = "<< Summary of Previous >>"
     
     static func buildUserMessages(newMessage: Message, to bot: Bot, histories: [Message]) -> [ChatMessage] {
-        let separator = "\n### Instruction\n"
         let systemMessage = """
-        The following is a conversation between a human and AI assistant(s). You are a helpful, creative, clever, and very friendly AI assistant named `\(bot.name)`. \
-        Lines of the form `{"from": "User", "to": "Another User", "body": "message body"}` show the history of the conversation so far. and means that "message body" was addressed to "Another User" by a user named "User". \
-        You are to responde the instruction after the `\(separator)` as `\(bot.name)`, with taking into account the flow of the conversation including "\(separatorOfSummary)" section if any. \
-        Please return only the content of "body".
+        The following is a conversation between a human and AI assistant. The assistant is a helpful, creative, clever, and very friendly.
+        Continue the conversation below as `\(bot.name)`. When "\(separatorOfSummary)" section given, consider its content.
+        Response should be in markdown format.
         """
 
         var preTexts: [String] = [systemMessage]
@@ -27,39 +25,42 @@ struct MessageBuilder {
 
         return buildMessages(
             preTexts: preTexts,
-            histories: selectAfterLastSummary(histories: histories).filter { $0 != newMessage },
-            userMessage: "\(separator)\(newMessage.text)"
+            histories: selectAfterLastSummary(histories: histories),
+            instruction: "`\(bot.name)` said to `Human`: "
         )
     }
 
     static func buildSummarizeMessage(histories: [Message]) -> [ChatMessage] {
         let systemMessage = """
-        The following is a conversation between the user and AI assistant(s). \
-        Lines of the form `{"from": "User", "to": "Another User", "body": "message body"}` show the history of the conversation so far. and means that "message body" was addressed to "Another User" by a user named "User".
+        The following is a conversation between a human and AI assistant(s).
         """
         
-        let userMessage = """
-        ## Instruction
-        Please summarize the above conversation by topic, including the "Topic", "Summary of Discussion", "Conclusion" and "Impressions" respectively, with taking into account "\(separatorOfSummary)" section if any. \
+        let instruction = """
+        << Instruction >>
+        Please summarize the above conversation by topic in four sections respectively: "Topic", "Summary of Discussion", "Conclusion" and "Impressions". \
+        When "\(separatorOfSummary)" section given, consider its content.
         Response should be in markdown format, with bullet points for "Summary of Discussion" and "Conclusion". All responses should be in Japanese.
         """
 
         let historiesAfterSummary = selectAfterLastSummary(histories: histories)
         
-        return buildMessages(preTexts: [systemMessage], histories: historiesAfterSummary, userMessage: userMessage)
+        return buildMessages(preTexts: [systemMessage], histories: historiesAfterSummary, instruction: instruction)
     }
 
-    private static func buildMessages(preTexts: [String], histories: [Message], userMessage: String? = nil) -> [ChatMessage] {
+    private static func buildMessages(preTexts: [String], histories: [Message], instruction: String) -> [ChatMessage] {
         var messages: [ChatMessage] = []
         messages.append(contentsOf: preTexts.map { .system(content: $0) })
 
-        var newMessages = historiesToJson(histories: histories)
-        if let userMessage = userMessage {
-            newMessages.append(userMessage)
+        var newMessages: [String] = []
+        if let first = histories.first, first.messageType == .summary {
+            newMessages.append("\(separatorOfSummary)\n\(first.text)\n\n<< Conversation >>")
+            newMessages.append(contentsOf: historiesToJson(histories: Array(histories[1...])))
+        } else {
+            newMessages.append(contentsOf: historiesToJson(histories: histories))
         }
+        newMessages.append(instruction)
 
         messages.append(.user(content: newMessages.joined(separator: "\n")))
-
         return messages
     }
 
@@ -67,19 +68,11 @@ struct MessageBuilder {
         return histories.compactMap { msg in
             switch(msg.messageType) {
             case .bot:
-                return [
-                    "from": msg.postedBy,
-                    "to": "Human",
-                    "body": msg.text
-                ].toJSON()
+                return "`\(msg.postedBy)` said to `Human`: \(msg.text)"
             case .user:
-                return [
-                    "from": "Human",
-                    "to": msg.postedTo ?? "Robot",
-                    "body": msg.text
-                ].toJSON()
+                return "`Human` said to `\(msg.postedTo ?? "Robot")`: \(msg.text)"
             default:
-                return "\(separatorOfSummary)\n\(msg.text)\n\n## Newer Conversation\n"
+                return nil
             }
         }
     }

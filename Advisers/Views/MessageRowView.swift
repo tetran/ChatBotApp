@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MarkdownUI
 
 struct MessageRowView: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
@@ -54,7 +55,7 @@ struct MessageRowView: View {
                         .cornerRadius(2)
                 }
                 
-                Text(message.text)
+                Markdown(message.text)
                     .lineSpacing(4)
                     .textSelection(.enabled)
             }

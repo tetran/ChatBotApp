@@ -34,6 +34,7 @@
 		5BD872032A063F18003A169E /* RoomBotSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD872022A063F18003A169E /* RoomBotSelectView.swift */; };
 		5BD872082A06608A003A169E /* OpenAIConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD872072A06608A003A169E /* OpenAIConfig.swift */; };
 		5BD87C902A19F30F00437E4E /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD87C8F2A19F30F00437E4E /* CustomTextEditor.swift */; };
+		5BD87C952A1A0F4D00437E4E /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 5BD87C942A1A0F4D00437E4E /* MarkdownUI */; };
 		5BEFA4F42A036A41004B8537 /* AdvisersApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFA4F32A036A41004B8537 /* AdvisersApp.swift */; };
 		5BEFA4F62A036A41004B8537 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFA4F52A036A41004B8537 /* ContentView.swift */; };
 		5BEFA4F82A036A42004B8537 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BEFA4F72A036A42004B8537 /* Assets.xcassets */; };
@@ -129,6 +130,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BD87C952A1A0F4D00437E4E /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,6 +313,7 @@
 			);
 			name = Advisers;
 			packageProductDependencies = (
+				5BD87C942A1A0F4D00437E4E /* MarkdownUI */,
 			);
 			productName = Advisers;
 			productReference = 5BEFA4F02A036A41004B8537 /* Advisers.app */;
@@ -341,6 +344,7 @@
 			);
 			mainGroup = 5BEFA4E72A036A41004B8537;
 			packageReferences = (
+				5BD87C932A1A0F4D00437E4E /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 			);
 			productRefGroup = 5BEFA4F12A036A41004B8537 /* Products */;
 			projectDirPath = "";
@@ -616,6 +620,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5BD87C932A1A0F4D00437E4E /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5BD87C942A1A0F4D00437E4E /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5BD87C932A1A0F4D00437E4E /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		5BEFA4FE2A036A42004B8537 /* Advisers.xcdatamodeld */ = {
