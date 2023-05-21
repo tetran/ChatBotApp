@@ -15,11 +15,11 @@ import AppKit
 public typealias NativeColor = NSColor
 #endif
 
-struct Style {
+extension Color {
     
-    static let roomBGColor = Color(CGColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1))
+    static let roomBG = Color("RoomBgColor")
     
-    static let messageHoverBGColor = Color(CGColor(red: 0.12, green: 0.12, blue: 0.12, alpha: 1))
+    static let messageHoverBG = Color("MessageHoverBgColor")
 }
 
 extension NativeColor {

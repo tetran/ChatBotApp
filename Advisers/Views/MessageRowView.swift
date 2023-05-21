@@ -8,16 +8,21 @@
 import SwiftUI
 
 struct MessageRowView: View {
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
     var message: Message
     
     @State private var isHovered = false
     
     var senderColor: Color {
-        message.senderColor ?? .white
+        message.senderColor ?? defualtColor
     }
     
     var receiverBgColor: Color {
-        (message.receiverColor ?? .white).opacity(0.7)
+        (message.receiverColor ?? defualtColor).opacity(0.7)
+    }
+    
+    var defualtColor: Color {
+        colorScheme == .light ? .black : .white
     }
     
     var body: some View {
@@ -55,7 +60,7 @@ struct MessageRowView: View {
             }
         }
         .padding(8)
-        .background(isHovered ? Style.messageHoverBGColor : Style.roomBGColor)
+        .background(isHovered ? Color.messageHoverBG : Color.roomBG)
         .onHover { hover in
             isHovered = hover
         }

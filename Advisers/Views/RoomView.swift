@@ -95,7 +95,7 @@ struct RoomView: View {
                         RoundedRectangle(cornerRadius: 4)
                             .stroke(Color.gray, lineWidth: 1)
                     )
-                    .background(Style.roomBGColor)
+                    .background(Color.roomBG)
                 }
                 .padding(8)
             }
@@ -114,7 +114,7 @@ struct RoomView: View {
             self.messages = room.allMessages()
             self.assignedBots = room.fetchRelatedBots()
         }
-        .background(Style.roomBGColor)
+        .background(Color.roomBG)
     }
     
     private func makeSummary() async {
