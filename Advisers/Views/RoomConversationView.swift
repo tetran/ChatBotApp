@@ -10,26 +10,26 @@ import SwiftUI
 struct RoomConversationView: View {
     @AppStorage(UserDataManager.Keys.model.rawValue) private var selectedModel: String = "gpt-3.5-turbo"
     @Environment(\.managedObjectContext) private var viewContext
-    
+
     @State private var targetBot: Bot?
-    
+
     @Binding var newText: String
     @Binding var newMessageAdded: Bool
     @Binding var messages: [Message]
     @Binding var editorHeight: CGFloat
-    
+
     let room: Room
     let assignedBots: [Bot]
-    
+
     var canSend: Bool {
-        targetBot != nil && !newText.isEmpty
+        targetBot != nil && !newText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     var body: some View {
         ZStack {
             CustomTextEditor(text: $newText) {
                 guard canSend, let bot = targetBot else { return }
-                
+
                 let userMessage = addNewMessage()
                 Task {
                     await sendNewMessage(userMessage: userMessage, to: bot)
@@ -74,7 +74,7 @@ struct RoomConversationView: View {
                         guard let bot = targetBot else {
                             return
                         }
-                        
+
                         let userMessage = addNewMessage()
                         Task {
                             await sendNewMessage(userMessage: userMessage, to: bot)
@@ -107,17 +107,17 @@ struct RoomConversationView: View {
         let newLineCount = newText.filter { $0 == "\n" }.count
         return min(CGFloat(newLineCount) * 22 + 150, 480)
     }
-    
+
     private func addNewMessage() -> Message {
         let userMessage = UserMessage.create(in: viewContext, text: newText, room: room, destBot: targetBot).toMessage()
         messages.append(userMessage)
 
         newText = ""
         newMessageAdded = true
-        
+
         return userMessage
     }
-    
+
     private func sendNewMessage(userMessage: Message, to bot: Bot) async {
         let messages = MessageBuilder.buildUserMessages(newMessage: userMessage, to: bot, histories: self.messages)
         print("================ Messages:")
@@ -127,7 +127,7 @@ struct RoomConversationView: View {
 
         let params = ChatRequest(messages: messages, model: selectedModel)
         let response = await OpenAIClient.shared.chat(params)
-        
+
         print("================ Response:")
         print(response ?? "None")
 

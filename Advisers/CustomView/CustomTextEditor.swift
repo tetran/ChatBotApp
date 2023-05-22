@@ -26,7 +26,11 @@ struct CustomTextEditor: NSViewRepresentable {
     }
     
     func updateNSView(_ nsView: NSTextView, context: Context) {
-        nsView.string = text
+        let currentText = nsView.string
+        if currentText != text {
+            nsView.string = text
+            nsView.selectedRange = NSMakeRange(text.utf8.count, 0)  // カーソル位置固定
+        }
         
 //        if let font = context.environment.font {
 //            nsView.font = NSFont.preferredFont(from: font)
