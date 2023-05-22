@@ -9,7 +9,7 @@ import Foundation
 
 struct MessageBuilder {
     
-    static let separatorOfSummary = "<< Summary of Previous >>"
+    static let separatorOfSummary = "\nSummary of Previous: \"\"\""
     
     static func buildUserMessages(newMessage: Message, to bot: Bot, histories: [Message]) -> [ChatMessage] {
         let systemMessage = """
@@ -31,13 +31,13 @@ struct MessageBuilder {
 
     static func buildSummarizeMessage(histories: [Message]) -> [ChatMessage] {
         let systemMessage = """
-        You are an editor of a leading newspaper, and very good at summarizing conversations.
+        You are an excellent secretary, and very good at summarizing conversations.
         """
         
         let instruction = """
-        << Instruction >>
-        Summarize the above conversation briefly by topic in three sections respectively: "Title", "Summary of Discussion", "Conclusion".
-        Response should be in markdown format, with bullet points for "Summary of Discussion" and "Conclusion". All responses should be in Japanese.
+        \nInstruction: \"\"\"
+        Summarize the above conversation briefly by topic in three sections respectively: "Title", "Discussion", "Conclusion".
+        Response should be in markdown format. All responses should be in Japanese including section names.
         """
         
         return buildMessages(preTexts: [systemMessage], histories: histories, instruction: instruction)
