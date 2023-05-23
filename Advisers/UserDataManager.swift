@@ -16,6 +16,7 @@ class UserDataManager {
         case organizationId = "OpenAI.organizationId"
         case apiKey = "OpenAI.apiKey"
         case model = "OpenAI.model"
+        case userName = "User.name"
     }
 
     private let userDefaults = UserDefaults.standard
@@ -44,6 +45,15 @@ class UserDataManager {
         }
         set {
             userDefaults.setValue(newValue, forKey: Keys.model.rawValue)
+        }
+    }
+    
+    var userName: String {
+        get {
+            return userDefaults.string(forKey: Keys.userName.rawValue) ?? "Human"
+        }
+        set {
+            userDefaults.setValue(newValue, forKey: Keys.userName.rawValue)
         }
     }
 }

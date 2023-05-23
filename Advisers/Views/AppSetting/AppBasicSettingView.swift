@@ -13,6 +13,14 @@ struct AppBasicSettingView: View {
     
     var body: some View {
         Form {
+            TextField("Your Name", text: Binding(get: {
+                UserDataManager.shared.userName
+            }, set: {
+                UserDataManager.shared.userName = $0
+            }))
+                .padding()
+                .textFieldStyle(.roundedBorder)
+            
             TextField("Organiztion ID", text: Binding(get: {
                 UserDataManager.shared.organizationId
             }, set: {

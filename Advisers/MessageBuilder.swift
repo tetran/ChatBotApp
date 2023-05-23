@@ -13,8 +13,8 @@ struct MessageBuilder {
     
     static func buildUserMessages(newMessage: Message, to bot: Bot, histories: [Message]) -> [ChatMessage] {
         let systemMessage = """
-        The following is a conversation between a human and AI assistant. The assistant is a helpful, creative, clever, and very friendly.
-        Continue the conversation below as `\(bot.name)`. Response should be in markdown format.
+        The following is a conversation between `\(UserDataManager.shared.userName)` and AI assistant(s). The assistant is a helpful, creative, clever, and very friendly.
+        Continue the conversation below as `\(bot.name)` as if talking to `\(UserDataManager.shared.userName)`. Response should be in markdown format.
         """
 
         var preTexts: [String] = [systemMessage]
@@ -25,7 +25,7 @@ struct MessageBuilder {
         return buildMessages(
             preTexts: preTexts,
             histories: histories,
-            instruction: "`\(bot.name)` told `Human`: "
+            instruction: "`\(bot.name)` told `\(UserDataManager.shared.userName)`: "
         )
     }
 
@@ -66,9 +66,9 @@ struct MessageBuilder {
         return histories.compactMap { msg in
             switch(msg.messageType) {
             case .bot:
-                return "`\(msg.postedBy)` told `Human`: \(msg.text)"
+                return "`\(msg.postedBy)` told `\(UserDataManager.shared.userName)`: \(msg.text)"
             case .user:
-                return "`Human` told `\(msg.postedTo ?? "Robot")`: \(msg.text)"
+                return "`\(UserDataManager.shared.userName)` told `\(msg.postedTo ?? "Robot")`: \(msg.text)"
             default:
                 return nil
             }

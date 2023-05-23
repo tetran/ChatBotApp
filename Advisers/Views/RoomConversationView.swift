@@ -135,6 +135,7 @@ struct RoomConversationView: View {
             let botMessage = BotMessage.create(in: viewContext, text: message.content, bot: bot, room: room)
             self.messages.append(botMessage.toMessage())
             newMessageAdded = true
+            SoundPlayer.shared.playOneShot("Ringtone", type: "mp3")
         }
     }
 }

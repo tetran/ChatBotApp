@@ -26,6 +26,7 @@
 		5B963B822A18CAD4005921F5 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B963B812A18CAD4005921F5 /* AppState.swift */; };
 		5BB0AA8A2A10D799003A8804 /* Summary+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB0AA882A10D799003A8804 /* Summary+CoreDataClass.swift */; };
 		5BB0AA8B2A10D799003A8804 /* Summary+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB0AA892A10D799003A8804 /* Summary+CoreDataProperties.swift */; };
+		5BC441F42A1CCBF900A3A64B /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC441F32A1CCBF900A3A64B /* SoundPlayer.swift */; };
 		5BD871EF2A049DAB003A169E /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD871EE2A049DAB003A169E /* UserDataManager.swift */; };
 		5BD871F12A04A237003A169E /* EditBotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD871F02A04A237003A169E /* EditBotView.swift */; };
 		5BD871F32A04A333003A169E /* NewBotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD871F22A04A333003A169E /* NewBotView.swift */; };
@@ -85,6 +86,7 @@
 		5B963B812A18CAD4005921F5 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		5BB0AA882A10D799003A8804 /* Summary+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Summary+CoreDataClass.swift"; path = "Advisers/Models/Summary+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		5BB0AA892A10D799003A8804 /* Summary+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Summary+CoreDataProperties.swift"; path = "Advisers/Models/Summary+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		5BC441F32A1CCBF900A3A64B /* SoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
 		5BD871EE2A049DAB003A169E /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
 		5BD871F02A04A237003A169E /* EditBotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBotView.swift; sourceTree = "<group>"; };
 		5BD871F22A04A333003A169E /* NewBotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBotView.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				5B426F182A0A5AC9006294C0 /* Style.swift */,
 				5B963B7D2A189097005921F5 /* JSONHelper.swift */,
 				5B963B7F2A18A580005921F5 /* MessageBuilder.swift */,
+				5BC441F32A1CCBF900A3A64B /* SoundPlayer.swift */,
 				5B1DD9822A07658A008996DA /* API */,
 				5BEFA5082A036A61004B8537 /* Models */,
 				5BEFA5072A036A5A004B8537 /* Views */,
@@ -394,6 +397,7 @@
 				5BEFA5422A03AD42004B8537 /* NewRoomView.swift in Sources */,
 				5BEFA54E2A03BC79004B8537 /* AppBasicSettingView.swift in Sources */,
 				5BEFA5352A0391CA004B8537 /* UserMessage+CoreDataClass.swift in Sources */,
+				5BC441F42A1CCBF900A3A64B /* SoundPlayer.swift in Sources */,
 				5BEFA54A2A03B7C0004B8537 /* RoomBotSettingView.swift in Sources */,
 				5B963B822A18CAD4005921F5 /* AppState.swift in Sources */,
 				5BD872032A063F18003A169E /* RoomBotSelectView.swift in Sources */,
