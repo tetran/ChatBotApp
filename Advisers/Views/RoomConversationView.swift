@@ -30,7 +30,7 @@ struct RoomConversationView: View {
             CustomTextEditor(text: $newText) {
                 guard canSend, let bot = targetBot else { return }
 
-                let userMessage = addNewMessage()
+                let userMessage = createNewMessage()
                 Task {
                     await sendNewMessage(userMessage: userMessage, to: bot)
                 }
@@ -75,7 +75,7 @@ struct RoomConversationView: View {
                             return
                         }
 
-                        let userMessage = addNewMessage()
+                        let userMessage = createNewMessage()
                         Task {
                             await sendNewMessage(userMessage: userMessage, to: bot)
                         }
@@ -108,7 +108,7 @@ struct RoomConversationView: View {
         return min(CGFloat(newLineCount) * 22 + 150, 480)
     }
 
-    private func addNewMessage() -> Message {
+    private func createNewMessage() -> Message {
         let userMessage = UserMessage.create(in: viewContext, text: newText, room: room, destBot: targetBot).toMessage()
         messages.append(userMessage)
 
@@ -135,7 +135,7 @@ struct RoomConversationView: View {
             let botMessage = BotMessage.create(in: viewContext, text: message.content, bot: bot, room: room)
             self.messages.append(botMessage.toMessage())
             newMessageAdded = true
-            SoundPlayer.shared.playOneShot("Ringtone", type: "mp3")
+            SoundPlayer.shared.playRingtone()
         }
     }
 }

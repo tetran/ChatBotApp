@@ -144,6 +144,7 @@ struct RoomView: View {
             let summury = Summary.create(in: viewContext, text: message.content, room: room)
             self.messages.append(summury.toMessage())
             newMessageAdded = true
+            SoundPlayer.shared.playRingtone()
         }
         
         appState.isBlocking = false

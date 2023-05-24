@@ -50,8 +50,8 @@ struct CustomTextEditor: NSViewRepresentable {
         }
         
         func textView(_ textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
-            if commandSelector == NSSelectorFromString("noop:") {
-                if let event = NSApp.currentEvent, event.modifierFlags.contains(.command) {
+            if let event = NSApp.currentEvent {
+                if event.modifierFlags.intersection(.deviceIndependentFlagsMask) == [.command] && event.keyCode == 36 {
                     parent.onCommandEnter()
                     return true
                 }

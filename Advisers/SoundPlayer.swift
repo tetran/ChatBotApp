@@ -29,4 +29,7 @@ class SoundPlayer {
         }
     }
     
+    func playRingtone() {
+        playOneShot("Ringtone", type: "mp3")
+    }
 }

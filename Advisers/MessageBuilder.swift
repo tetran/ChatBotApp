@@ -13,7 +13,7 @@ struct MessageBuilder {
     
     static func buildUserMessages(newMessage: Message, to bot: Bot, histories: [Message]) -> [ChatMessage] {
         let systemMessage = """
-        The following is a conversation between `\(UserDataManager.shared.userName)` and AI assistant(s). The assistant is a helpful, creative, clever, and very friendly.
+        The following is a conversation between a user named`\(UserDataManager.shared.userName)` and AI assistant(s). The assistant is a helpful, creative, clever, and very friendly.
         Continue the conversation below as `\(bot.name)` as if talking to `\(UserDataManager.shared.userName)`. Response should be in markdown format.
         """
 
