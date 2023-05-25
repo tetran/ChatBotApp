@@ -28,48 +28,38 @@ class OpenAIClient {
     private init() {}
     
     /// 利用可能なモデル一覧を取得する
-    func models() async -> ModelsResponse? {
-        return await get("/models")
+    func models() async throws -> ModelsResponse {
+        return try await get("/models")
     }
     
     /// chatリクエストを行う
-    func chat(_ parameters: ChatRequest) async -> ChatResponse? {
+    func chat(_ parameters: ChatRequest) async throws -> ChatResponse {
         print("Parameters: \(parameters)")
-        return await postJson("/chat/completions", parameters: parameters)
+        return try await postJson("/chat/completions", parameters: parameters)
     }
     
-    private func get<U: Decodable>(_ path: String) async -> U? {
-        do {
-            let request = APIRequest(url: makeUrl(path), method: "GET", headers: makeHeader())
-            print("Request: \(request)")
-            
-            let response = try await communicator.performRequest(request)
-            print("Response: \(response)")
-            
-            return try responseDecoder.decode(U.self, from: response.body)
-        } catch {
-            print("Error: \(error)")
-            return nil
-        }
+    private func get<U: Decodable>(_ path: String) async throws -> U {
+        let request = APIRequest(url: makeUrl(path), method: "GET", headers: makeHeader())
+        print("Request: \(request)")
+        
+        let response = try await communicator.performRequest(request)
+        print("Response: \(response)")
+        
+        return try responseDecoder.decode(U.self, from: response.body)
     }
     
-    private func postJson<T: Encodable, U: Decodable>(_ path: String, parameters: T) async -> U? {
-        do {
-            let requestBody = try requestEncoder.encode(parameters)
-            print("Encoded Parameters: \(String(data: requestBody, encoding: .utf8) ?? "Failed")")
-            
-            let url = makeUrl(path)
-            let request = APIRequest(url: url, method: "POST", headers: makeHeader(), body: requestBody)
-            print("Request: \(request)")
-            
-            let response = try await communicator.performRequest(request)
-            print("Response: \(response)")
-            
-            return try responseDecoder.decode(U.self, from: response.body)
-        } catch {
-            print("Error: \(error)")
-            return nil
-        }
+    private func postJson<T: Encodable, U: Decodable>(_ path: String, parameters: T) async throws -> U {
+        let requestBody = try requestEncoder.encode(parameters)
+        print("Encoded Parameters: \(String(data: requestBody, encoding: .utf8) ?? "Failed")")
+        
+        let url = makeUrl(path)
+        let request = APIRequest(url: url, method: "POST", headers: makeHeader(), body: requestBody)
+        print("Request: \(request)")
+        
+        let response = try await communicator.performRequest(request)
+        print("Response: \(response)")
+        
+        return try responseDecoder.decode(U.self, from: response.body)
     }
     
     private func makeUrl(_ path: String) -> String {

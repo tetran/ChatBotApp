@@ -21,7 +21,10 @@ struct RoomView: View {
     @State private var showRoomSetting = false
     @State private var newMessageAdded = false
     @State private var editorHeight: CGFloat = 120
-
+    
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    
     let room: Room
     
     private var messagesAfterLastSummary: [Message] {
@@ -114,6 +117,7 @@ struct RoomView: View {
                 newMessageAdded: $newMessageAdded,
                 messages: $messages,
                 editorHeight: $editorHeight,
+                alertMessage: $alertMessage,
                 room: room,
                 assignedBots: assignedBots
             )
@@ -123,6 +127,16 @@ struct RoomView: View {
             self.messages = room.allMessages()
             self.assignedBots = room.fetchRelatedBots()
         }
+        .onChange(of: alertMessage) { message in
+            showAlert = !message.isEmpty
+        }
+        .alert("Error", isPresented: $showAlert, actions: {
+            Button("OK") {
+                alertMessage = ""
+            }
+        }, message: {
+          Text(alertMessage)
+        })
         .background(Color.roomBG)
     }
     
@@ -136,15 +150,19 @@ struct RoomView: View {
         }
 
         let params = ChatRequest(messages: messages, model: selectedModel)
-        let response = await OpenAIClient.shared.chat(params)
-        print("================ Response:")
-        print(response ?? "None")
+        do {
+            let response = try await OpenAIClient.shared.chat(params)
+            print("================ Response:")
+            print(response)
 
-        if let message = response?.choices.first?.message {
-            let summury = Summary.create(in: viewContext, text: message.content, room: room)
-            self.messages.append(summury.toMessage())
-            newMessageAdded = true
-            SoundPlayer.shared.playRingtone()
+            if let message = response.choices.first?.message {
+                let summury = Summary.create(in: viewContext, text: message.content, room: room)
+                self.messages.append(summury.toMessage())
+                newMessageAdded = true
+                SoundPlayer.shared.playRingtone()
+            }
+        } catch {
+            alertMessage = error.localizedDescription
         }
         
         appState.isBlocking = false

@@ -17,6 +17,7 @@ struct RoomConversationView: View {
     @Binding var newMessageAdded: Bool
     @Binding var messages: [Message]
     @Binding var editorHeight: CGFloat
+    @Binding var alertMessage: String
 
     let room: Room
     let assignedBots: [Bot]
@@ -126,23 +127,35 @@ struct RoomConversationView: View {
         }
 
         let params = ChatRequest(messages: messages, model: selectedModel)
-        let response = await OpenAIClient.shared.chat(params)
+        do {
+            let response = try await OpenAIClient.shared.chat(params)
 
-        print("================ Response:")
-        print(response ?? "None")
+            print("================ Response:")
+            print(response)
 
-        if let message = response?.choices.first?.message {
-            let botMessage = BotMessage.create(in: viewContext, text: message.content, bot: bot, room: room)
-            self.messages.append(botMessage.toMessage())
-            newMessageAdded = true
-            SoundPlayer.shared.playRingtone()
+            if let message = response.choices.first?.message {
+                let botMessage = BotMessage.create(in: viewContext, text: message.content, bot: bot, room: room)
+                self.messages.append(botMessage.toMessage())
+                newMessageAdded = true
+                SoundPlayer.shared.playRingtone()
+            }
+        } catch {
+            alertMessage = error.localizedDescription
         }
     }
 }
 
 struct RoomConversationView_Previews: PreviewProvider {
     static var previews: some View {
-        RoomConversationView(newText: .constant(""), newMessageAdded: .constant(false), messages: .constant([]), editorHeight: .constant(100), room: Room(), assignedBots: [])
-            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        RoomConversationView(
+            newText: .constant(""),
+            newMessageAdded: .constant(false),
+            messages: .constant([]),
+            editorHeight: .constant(100),
+            alertMessage: .constant(""),
+            room: Room(),
+            assignedBots: []
+        )
+        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

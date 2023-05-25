@@ -50,10 +50,8 @@ struct AppBasicSettingView: View {
             models = [selectedModel]
             
             Task {
-                let openAIModels = await OpenAIClient.shared.models()
-                if let models = openAIModels?.data {
-                    self.models = models.map { $0.id }.filter { $0.contains("gpt-") }.sorted()
-                }
+                let openAIModels = try await OpenAIClient.shared.models()
+                self.models = openAIModels.data.map { $0.id }.filter { $0.contains("gpt-") }.sorted()
             }
         }
     }

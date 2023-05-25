@@ -16,6 +16,7 @@ struct APICommunicator {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = request.method
         urlRequest.httpBody = request.body
+        urlRequest.timeoutInterval = 120
         
         if let headers = request.headers {
             for (key, value) in headers {
