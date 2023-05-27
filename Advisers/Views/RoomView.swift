@@ -21,6 +21,8 @@ struct RoomView: View {
     @State private var showRoomSetting = false
     @State private var newMessageAdded = false
     @State private var editorHeight: CGFloat = 120
+    @State private var summarizing = false
+    @State private var noticeShowing = false
     
     @State private var showAlert = false
     @State private var alertMessage = ""
@@ -36,6 +38,7 @@ struct RoomView: View {
     }
     
     private let spacerId = "BOTTOM_SPACER"
+    private let noticeId = "BOTTOM_NOTICE"
     private let numRequiredMesagesForSummary = 6 // 3往復
     
     var body: some View {
@@ -51,13 +54,19 @@ struct RoomView: View {
                     showRoomSetting = true
                 } label: {
                     Label("Setting", systemImage: "gear")
+                        .padding(8)
                 }
                 .sheet(isPresented: $showRoomSetting) {
                     RoomSettingView(room: room, assignedBots: $assignedBots)
                         .frame(minWidth: 400, minHeight: 400)
                 }
-                .buttonStyle(.plain)
-                .padding()
+                .buttonStyle(AppButtonStyle(
+                    foregroundColor: .primary,
+                    pressedForegroundColor: .primary.opacity(0.6),
+                    backgroundColor: .gray.opacity(0.2),
+                    pressedBackgroundColor: .gray.opacity(0.1)
+                ))
+                .padding(8)
             }
 
             Divider()
@@ -81,6 +90,25 @@ struct RoomView: View {
                                     proxy.scrollTo(spacerId)
                                     newMessageAdded = false
                                 }
+                            }
+                            .onChange(of: summarizing) { summarizing in
+                                if summarizing {
+                                    proxy.scrollTo(spacerId)
+                                }
+                            }
+                            
+                            if summarizing {
+                                Text("まとめ作成中...")
+                                    .font(.title2)
+                                    .padding(32)
+                                    .foregroundColor(.red)
+                                    .id(noticeId)
+                                    .opacity(noticeShowing ? 1.0 : 0.0)
+                                    .onAppear {
+                                        withAnimation(.easeInOut(duration: 2).repeatForever(autoreverses: true)) {
+                                            noticeShowing.toggle()
+                                        }
+                                    }
                             }
                             
                             Spacer()
@@ -107,7 +135,7 @@ struct RoomView: View {
                             .stroke(Color.gray, lineWidth: 1)
                     )
                     .background(Color.roomBG)
-                    .disabled(messagesAfterLastSummary.count < numRequiredMesagesForSummary)
+                    .disabled(messagesAfterLastSummary.count < numRequiredMesagesForSummary || summarizing)
                 }
                 .padding(8)
             }
@@ -118,6 +146,7 @@ struct RoomView: View {
                 messages: $messages,
                 editorHeight: $editorHeight,
                 alertMessage: $alertMessage,
+                stopInput: $summarizing,
                 room: room,
                 assignedBots: assignedBots
             )
@@ -135,13 +164,13 @@ struct RoomView: View {
                 alertMessage = ""
             }
         }, message: {
-          Text(alertMessage)
+            Text(alertMessage)
         })
         .background(Color.roomBG)
     }
     
     private func makeSummary() async {
-        appState.isBlocking = true
+        summarizing = true
         
         let messages = MessageBuilder.buildSummarizeMessage(histories: self.messages)
         print("================ Messages:")
@@ -165,7 +194,7 @@ struct RoomView: View {
             alertMessage = error.localizedDescription
         }
         
-        appState.isBlocking = false
+        summarizing = false
     }
 }
 

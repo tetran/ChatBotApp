@@ -11,6 +11,8 @@ struct DevMenuView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var appState: AppState
     
+    @State private var showDeletingAlert = false
+    
     var body: some View {
         VStack {
             Button {
@@ -21,13 +23,19 @@ struct DevMenuView: View {
                 Text("APIログを見る")
             }
             Button {
-                deleteEntity("BotMessage")
-                deleteEntity("UserMessage")
-                deleteEntity("RoomBot")
-                deleteEntity("Room")
+                showDeletingAlert = true
             } label: {
                 Text("Room・メッセージを全て削除")
             }
+            .alert("本当に消す？", isPresented: $showDeletingAlert, actions: {
+                Button("消す！") {
+                    deleteEntity("BotMessage")
+                    deleteEntity("UserMessage")
+                    deleteEntity("RoomBot")
+                    deleteEntity("Room")
+                }
+                Button("やめる") {}
+            })
         }
     }
     

@@ -47,10 +47,16 @@ struct RoomListView: View {
                     showNewRoom = true
                 } label: {
                     Label("Roomを追加する", systemImage: "plus")
+                        .font(.title2)
                         .padding()
                 }
                 .padding()
-                .buttonStyle(.plain)
+                .buttonStyle(AppButtonStyle(
+                    foregroundColor: .white,
+                    pressedForegroundColor: .white.opacity(0.6),
+                    backgroundColor: .accentColor,
+                    pressedBackgroundColor: .accentColor.opacity(0.6)
+                ))
                 .sheet(isPresented: $showNewRoom) {
                     NewRoomView(newRoom: $newRoom)
                         .frame(minWidth: 400, minHeight: 200)

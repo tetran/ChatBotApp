@@ -13,8 +13,8 @@ struct MessageBuilder {
     
     static func buildUserMessages(newMessage: Message, to bot: Bot, histories: [Message]) -> [ChatMessage] {
         let systemMessage = """
-        The following is a conversation between a user named`\(UserDataManager.shared.userName)` and AI assistant(s). The assistant is a helpful, creative, clever, and very friendly.
-        Continue the conversation below as `\(bot.name)` as if talking to `\(UserDataManager.shared.userName)`. Response should be in markdown format.
+        The following is a conversation between a user named`\(UserDataManager.shared.userName)` and AI assistant(s). `\(bot.name)` is a helpful, creative, clever, and very friendly assistant.
+        Continue the conversation below as `\(bot.name)`, as if talking to `\(UserDataManager.shared.userName)`. Response should be in markdown format.
         """
 
         var preTexts: [String] = [systemMessage]
@@ -31,13 +31,14 @@ struct MessageBuilder {
 
     static func buildSummarizeMessage(histories: [Message]) -> [ChatMessage] {
         let systemMessage = """
-        You are an excellent secretary, and very good at summarizing conversations.
+        The assistant an excellent secretary, and very good at summarizing conversations concisely.
+        Please follow the instruction.
         """
         
         let instruction = """
         \nInstruction: \"\"\"
-        Summarize the above conversation briefly by topic in three sections respectively: "Title", "Discussion", "Conclusion".
-        Response should be in markdown format. All responses should be in Japanese including section names.
+        Summarize the above conversation concisely. Response should be in markdown format and in Japanese.
+        \"\"\"
         """
         
         return buildMessages(preTexts: [systemMessage], histories: histories, instruction: instruction)
@@ -51,7 +52,7 @@ struct MessageBuilder {
         
         var newMessages: [String] = []
         if let first = historiesAfterSummary.first, first.messageType == .summary {
-            messages.append(.system(content: "Here is a summary of previous conversation. Consider this when responding.\n\(separatorOfSummary)\n\(first.text)"))
+            messages.append(.system(content: "Consider the summary of previous conversation below when responding.\n\(separatorOfSummary)\n\(first.text)\n\"\"\""))
             newMessages.append(contentsOf: historiesToJson(histories: Array(historiesAfterSummary[1...])))
         } else {
             newMessages.append(contentsOf: historiesToJson(histories: historiesAfterSummary))

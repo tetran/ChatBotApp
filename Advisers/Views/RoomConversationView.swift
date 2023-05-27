@@ -18,12 +18,13 @@ struct RoomConversationView: View {
     @Binding var messages: [Message]
     @Binding var editorHeight: CGFloat
     @Binding var alertMessage: String
+    @Binding var stopInput: Bool
 
     let room: Room
     let assignedBots: [Bot]
 
     var canSend: Bool {
-        targetBot != nil && !newText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        targetBot != nil && !newText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !stopInput
     }
 
     var body: some View {
@@ -37,9 +38,9 @@ struct RoomConversationView: View {
                 }
             }
             .lineSpacing(6)
-            .padding(.top, 48)
-            .padding(.leading, 16)
-            .padding(.trailing, 92)
+            .padding(.top, 40)
+            .padding(.leading, 12)
+            .padding(.trailing, 40)
             .onChange(of: newText) { _ in
                 withAnimation(.easeInOut(duration: 0.1)) {
                     editorHeight = calcEditorHeight()
@@ -51,17 +52,25 @@ struct RoomConversationView: View {
 
             // Bot選択
             VStack {
-                Picker("", selection: $targetBot) {
+                HStack {
                     ForEach(assignedBots) { bot in
-                        // targetBot がオプショナルなので、タグもオプショナルにする
-                        Text("@\(bot.name)")
-                            .font(.title2)
-                            .tag(Optional(bot))
+                        Button("@\(bot.name)") {
+                            withAnimation(.easeInOut(duration: 0.1)) {
+                                targetBot = bot
+                            }
+                        }
+                        .buttonStyle(AppButtonStyle(
+                            foregroundColor: .black,
+                            pressedForegroundColor: .black,
+                            backgroundColor: Color(bot.themeColor),
+                            pressedBackgroundColor: Color(bot.themeColor)
+                        ))
+                        .opacity(targetBot == bot ? 1.0 : 0.4)
                     }
+                    Spacer()
                 }
-                .pickerStyle(.segmented)
-                .padding()
-
+                .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 8))
+                
                 Spacer()
             }
 
@@ -81,15 +90,14 @@ struct RoomConversationView: View {
                             await sendNewMessage(userMessage: userMessage, to: bot)
                         }
                     } label: {
-                        Label("送信", systemImage: "paperplane.fill")
+                        Image(systemName: "paperplane.fill")
                             .foregroundColor(.white)
-                            .font(.title2)
                     }
                     .padding(8)
                     .buttonStyle(.plain)
                     .font(.title2)
                     .disabled(!canSend)
-                    .background(Color.accentColor.opacity(canSend ? 1 : 0.8))
+                    .background(Color.accentColor.opacity(canSend ? 1 : 0.5))
                     .cornerRadius(4)
                 }
             }
@@ -102,6 +110,11 @@ struct RoomConversationView: View {
                 .stroke(Color.gray, lineWidth: 2)
         )
         .padding(EdgeInsets(top: 0, leading: 12, bottom: 12, trailing: 12))
+        .onChange(of: assignedBots) { assignedBots in
+            if assignedBots.count == 1 {
+                targetBot = assignedBots.first
+            }
+        }
     }
 
     private func calcEditorHeight() -> CGFloat {
@@ -153,6 +166,7 @@ struct RoomConversationView_Previews: PreviewProvider {
             messages: .constant([]),
             editorHeight: .constant(100),
             alertMessage: .constant(""),
+            stopInput: .constant(false),
             room: Room(),
             assignedBots: []
         )

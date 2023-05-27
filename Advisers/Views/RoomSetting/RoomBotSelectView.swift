@@ -54,8 +54,14 @@ struct RoomBotSelectView: View {
                         dismiss()
                     } label: {
                         Label(bot.name, systemImage: "plus")
+                            .padding(4)
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(AppButtonStyle(
+                        foregroundColor: .primary,
+                        pressedForegroundColor: .primary,
+                        backgroundColor: Color(bot.themeColor).opacity(0.8),
+                        pressedBackgroundColor: Color(bot.themeColor).opacity(0.4)
+                    ))
                 }
             }
         }

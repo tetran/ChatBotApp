@@ -11,7 +11,7 @@ import AppKit
 struct CustomTextEditor: NSViewRepresentable {
     @Binding var text: String
     
-    var fontSize: CGFloat = 18
+    var fontSize: CGFloat = 16
     
     let onCommandEnter: () -> Void
     

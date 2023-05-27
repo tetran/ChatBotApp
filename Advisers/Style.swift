@@ -72,3 +72,20 @@ extension NativeFont {
         return nativeFont
     }
 }
+
+
+struct AppButtonStyle: ButtonStyle {
+    var foregroundColor: Color
+    var pressedForegroundColor: Color
+    var backgroundColor: Color
+    var pressedBackgroundColor: Color
+
+    func makeBody(configuration: Self.Configuration) -> some View {
+      configuration.label
+            .padding(.horizontal, 6)
+            .padding(.vertical, 4)
+            .foregroundColor(configuration.isPressed ? pressedForegroundColor : foregroundColor)
+            .background(configuration.isPressed ? pressedBackgroundColor : backgroundColor)
+            .cornerRadius(6)
+    }
+}

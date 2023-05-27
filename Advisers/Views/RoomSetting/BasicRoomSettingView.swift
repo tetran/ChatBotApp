@@ -14,7 +14,7 @@ struct BasicRoomSettingView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("Room名")
-                .font(.title2)
+                .font(.caption2)
             HStack {
                 Text(room.name)
                 
@@ -24,27 +24,33 @@ struct BasicRoomSettingView: View {
                     showRoomNameEdit = true
                 } label: {
                     Text("編集")
+                        .padding(.vertical, 4)
+                        .padding(.horizontal, 8)
                 }
-                .padding()
-                .buttonStyle(.plain)
+                .buttonStyle(AppButtonStyle(
+                    foregroundColor: .primary,
+                    pressedForegroundColor: .primary.opacity(0.6),
+                    backgroundColor: .gray.opacity(0.2),
+                    pressedBackgroundColor: .gray.opacity(0.1)
+                ))
                 .sheet(isPresented: $showRoomNameEdit) {
                     ModifyRoomNameView(room: room)
                         .frame(minWidth: 400, minHeight: 200)
                 }
             }
-            .padding(.bottom)
+            .padding(.vertical, 2)
             
             Text("ID")
-                .font(.title2)
+                .font(.caption2)
                 .padding(.top)
             Text(room.id.uuidString)
-                .padding(.vertical)
+                .padding(.vertical, 2)
             
             Text("作成日")
-                .font(.title2)
+                .font(.caption2)
                 .padding(.top)
             Text(room.createdAt.appFormat())
-                .padding(.vertical)
+                .padding(.vertical, 2)
         }
         .padding()
     }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RoomSettingView: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var selection: Tab = .basic
+    @State private var selection: Tab = .bot
     
     let room: Room
     
@@ -37,17 +37,17 @@ struct RoomSettingView: View {
             .padding()
             
             TabView(selection: $selection) {
+                RoomBotSettingView(room: room, assignedBots: $assignedBots)
+                    .tabItem {
+                        Label("Bot設定", systemImage: "list.bullet")
+                    }
+                    .tag(Tab.bot)
+                
                 BasicRoomSettingView(room: room)
                     .tabItem {
                         Label("Room情報", systemImage: "star")
                     }
                     .tag(Tab.basic)
-
-                RoomBotSettingView(room: room, assignedBots: $assignedBots)
-                    .tabItem {
-                        Label("Bot", systemImage: "list.bullet")
-                    }
-                    .tag(Tab.bot)
             }
         }
         .navigationBarBackButtonHidden(true)

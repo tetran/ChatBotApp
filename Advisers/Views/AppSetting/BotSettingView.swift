@@ -51,7 +51,12 @@ struct BotSettingView: View {
                         .padding()
                 }
                 .padding()
-                .buttonStyle(.plain)
+                .buttonStyle(AppButtonStyle(
+                    foregroundColor: .white,
+                    pressedForegroundColor: .white.opacity(0.6),
+                    backgroundColor: .accentColor,
+                    pressedBackgroundColor: .accentColor.opacity(0.6)
+                ))
                 .sheet(isPresented: $showNewBot) {
                     NewBotView(newBot: $newBot)
                         .frame(minWidth: 400, minHeight: 200)
