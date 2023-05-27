@@ -63,6 +63,7 @@
 		5BEFA54C2A03BC53004B8537 /* AppSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFA54B2A03BC53004B8537 /* AppSettingView.swift */; };
 		5BEFA54E2A03BC79004B8537 /* AppBasicSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFA54D2A03BC79004B8537 /* AppBasicSettingView.swift */; };
 		5BEFA5502A03BC8C004B8537 /* BotSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFA54F2A03BC8C004B8537 /* BotSettingView.swift */; };
+		5BFB0B6E2A21C583002F3ED9 /* APILogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFB0B6D2A21C583002F3ED9 /* APILogger.swift */; };
 		5BFC40312A07DE7F002AEBEC /* RoomConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFC40302A07DE7F002AEBEC /* RoomConversationView.swift */; };
 /* End PBXBuildFile section */
 
@@ -124,6 +125,7 @@
 		5BEFA54B2A03BC53004B8537 /* AppSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingView.swift; sourceTree = "<group>"; };
 		5BEFA54D2A03BC79004B8537 /* AppBasicSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBasicSettingView.swift; sourceTree = "<group>"; };
 		5BEFA54F2A03BC8C004B8537 /* BotSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotSettingView.swift; sourceTree = "<group>"; };
+		5BFB0B6D2A21C583002F3ED9 /* APILogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APILogger.swift; sourceTree = "<group>"; };
 		5BFC40302A07DE7F002AEBEC /* RoomConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomConversationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -170,6 +172,7 @@
 				5B1DD9852A0765AE008996DA /* APIResponse.swift */,
 				5B1DD9872A0765C0008996DA /* APICommunicator.swift */,
 				5B1DD9722A0759F3008996DA /* OpenAI */,
+				5BFB0B6D2A21C583002F3ED9 /* APILogger.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -400,6 +403,7 @@
 				5BC441F42A1CCBF900A3A64B /* SoundPlayer.swift in Sources */,
 				5BEFA54A2A03B7C0004B8537 /* RoomBotSettingView.swift in Sources */,
 				5B963B822A18CAD4005921F5 /* AppState.swift in Sources */,
+				5BFB0B6E2A21C583002F3ED9 /* APILogger.swift in Sources */,
 				5BD872032A063F18003A169E /* RoomBotSelectView.swift in Sources */,
 				5BEFA5502A03BC8C004B8537 /* BotSettingView.swift in Sources */,
 				5BD872002A063E3D003A169E /* RoomBot+CoreDataClass.swift in Sources */,

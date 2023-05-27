@@ -39,7 +39,7 @@ struct AppSettingView: View {
                 .tag(Tab.dev)
                 .frame(minHeight: 300)
         }
-        .frame(minWidth: 600)
+        .frame(minWidth: 800)
     }
 }
 

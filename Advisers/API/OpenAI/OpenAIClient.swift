@@ -34,7 +34,6 @@ class OpenAIClient {
     
     /// chatリクエストを行う
     func chat(_ parameters: ChatRequest) async throws -> ChatResponse {
-        print("Parameters: \(parameters)")
         return try await postJson("/chat/completions", parameters: parameters)
     }
     
@@ -50,14 +49,15 @@ class OpenAIClient {
     
     private func postJson<T: Encodable, U: Decodable>(_ path: String, parameters: T) async throws -> U {
         let requestBody = try requestEncoder.encode(parameters)
-        print("Encoded Parameters: \(String(data: requestBody, encoding: .utf8) ?? "Failed")")
+        let logPrefix = path.replacingOccurrences(of: "/", with: ".")
+        
+        APILogger.shared.putLog("Request: \(String(data: requestBody, encoding: .utf8) ?? "No Body")", prefix: logPrefix)
         
         let url = makeUrl(path)
         let request = APIRequest(url: url, method: "POST", headers: makeHeader(), body: requestBody)
-        print("Request: \(request)")
         
         let response = try await communicator.performRequest(request)
-        print("Response: \(response)")
+        APILogger.shared.putLog("Response: \(String(data: response.body, encoding: .utf8) ?? "No Body")", prefix: logPrefix)
         
         return try responseDecoder.decode(U.self, from: response.body)
     }

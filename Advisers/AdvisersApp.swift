@@ -22,6 +22,7 @@ struct AdvisersApp: App {
         Settings {
             AppSettingView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environmentObject(appState)
         }
     }
 }

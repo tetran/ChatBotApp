@@ -9,9 +9,17 @@ import SwiftUI
 
 struct DevMenuView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject var appState: AppState
     
     var body: some View {
         VStack {
+            Button {
+                if let documentDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+                    NSWorkspace.shared.open(documentDir)
+                }
+            } label: {
+                Text("APIログを見る")
+            }
             Button {
                 deleteEntity("BotMessage")
                 deleteEntity("UserMessage")
@@ -39,5 +47,6 @@ struct DevMenuView: View {
 struct DevMenuView_Previews: PreviewProvider {
     static var previews: some View {
         DevMenuView()
+            .environmentObject(AppState())
     }
 }
