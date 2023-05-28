@@ -57,7 +57,12 @@ class OpenAIClient {
         let request = APIRequest(url: url, method: "POST", headers: makeHeader(), body: requestBody)
         
         let response = try await communicator.performRequest(request)
-        APILogger.shared.putLog("Response: \(String(data: response.body, encoding: .utf8) ?? "No Body")", prefix: logPrefix)
+        APILogger.shared.putLog("Response Status: \(response.statusCode)\nHeaders: \(response.headers)\nBody: \(String(data: response.body, encoding: .utf8) ?? "No Body")", prefix: logPrefix)
+        
+        if response.statusCode != 200 {
+            let errorResponse = try responseDecoder.decode(ErrorResponse.self, from: response.body)
+            throw NSError(domain: "Invalid response", code: -1, userInfo: ["Status": response.statusCode, "Error": errorResponse])
+        }
         
         return try responseDecoder.decode(U.self, from: response.body)
     }

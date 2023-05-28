@@ -48,7 +48,7 @@ struct BotSettingView: View {
                     showNewBot = true
                 } label: {
                     Label("Botを追加する", systemImage: "plus")
-                        .padding()
+                        .padding(8)
                 }
                 .padding()
                 .buttonStyle(AppButtonStyle(

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RoomView: View {
     @AppStorage(UserDataManager.Keys.model.rawValue) private var selectedModel: String = "gpt-3.5-turbo"
+    
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var appState: AppState
 
@@ -21,7 +22,6 @@ struct RoomView: View {
     @State private var showRoomSetting = false
     @State private var newMessageAdded = false
     @State private var editorHeight: CGFloat = 120
-    @State private var summarizing = false
     @State private var noticeShowing = false
     
     @State private var showAlert = false
@@ -37,8 +37,11 @@ struct RoomView: View {
        return Array(messages[(summaryIndex + 1)...])
     }
     
+    private var canSummarize: Bool {
+        messagesAfterLastSummary.count >= numRequiredMesagesForSummary && !appState.summarizing
+    }
+    
     private let spacerId = "BOTTOM_SPACER"
-    private let noticeId = "BOTTOM_NOTICE"
     private let numRequiredMesagesForSummary = 6 // 3往復
     
     var body: some View {
@@ -83,32 +86,15 @@ struct RoomView: View {
                             .onAppear {
                                 if messages.count > 0 {
                                     proxy.scrollTo(spacerId)
+                                    print("Scrolled on appear")
                                 }
                             }
                             .onChange(of: newMessageAdded) { added in
                                 if added {
                                     proxy.scrollTo(spacerId)
                                     newMessageAdded = false
+                                    print("Scrolled by newMessageAdded")
                                 }
-                            }
-                            .onChange(of: summarizing) { summarizing in
-                                if summarizing {
-                                    proxy.scrollTo(spacerId)
-                                }
-                            }
-                            
-                            if summarizing {
-                                Text("まとめ作成中...")
-                                    .font(.title2)
-                                    .padding(32)
-                                    .foregroundColor(.red)
-                                    .id(noticeId)
-                                    .opacity(noticeShowing ? 1.0 : 0.0)
-                                    .onAppear {
-                                        withAnimation(.easeInOut(duration: 2).repeatForever(autoreverses: true)) {
-                                            noticeShowing.toggle()
-                                        }
-                                    }
                             }
                             
                             Spacer()
@@ -125,17 +111,32 @@ struct RoomView: View {
                             await makeSummary()
                         }
                     } label: {
-                        Text("ここまでの会話をまとめる")
+                        if appState.summarizing {
+                            Text("まとめ作成中...")
+                                .padding(4)
+                                .foregroundColor(.accentColor)
+                                .opacity(noticeShowing ? 1.0 : 0.0)
+                                .onAppear {
+                                    withAnimation(.easeInOut(duration: 2).repeatForever(autoreverses: true)) {
+                                        noticeShowing.toggle()
+                                    }
+                                }
+                        } else {
+                            Text("ここまでの会話をまとめる")
+                                .padding(4)
+                        }
                     }
-                    .buttonStyle(.plain)
-                    .padding(12)
-                    .contentShape(RoundedRectangle(cornerRadius: 4))
+                    .buttonStyle(AppButtonStyle(
+                        foregroundColor: .primary,
+                        pressedForegroundColor: .primary.opacity(0.6),
+                        backgroundColor: Color.roomBG,
+                        pressedBackgroundColor: Color.roomBG.opacity(0.6)
+                    ))
                     .overlay(
                         RoundedRectangle(cornerRadius: 4)
                             .stroke(Color.gray, lineWidth: 1)
                     )
-                    .background(Color.roomBG)
-                    .disabled(messagesAfterLastSummary.count < numRequiredMesagesForSummary || summarizing)
+                    .disabled(!canSummarize)
                 }
                 .padding(8)
             }
@@ -146,7 +147,6 @@ struct RoomView: View {
                 messages: $messages,
                 editorHeight: $editorHeight,
                 alertMessage: $alertMessage,
-                stopInput: $summarizing,
                 room: room,
                 assignedBots: assignedBots
             )
@@ -170,7 +170,10 @@ struct RoomView: View {
     }
     
     private func makeSummary() async {
-        summarizing = true
+        appState.summarizing = true
+        defer {
+            appState.summarizing = false
+        }
         
         let messages = MessageBuilder.buildSummarizeMessage(histories: self.messages)
         print("================ Messages:")
@@ -181,8 +184,7 @@ struct RoomView: View {
         let params = ChatRequest(messages: messages, model: selectedModel)
         do {
             let response = try await OpenAIClient.shared.chat(params)
-            print("================ Response:")
-            print(response)
+            print("================ Response:\n\(response)")
 
             if let message = response.choices.first?.message {
                 let summury = Summary.create(in: viewContext, text: message.content, room: room)
@@ -193,8 +195,6 @@ struct RoomView: View {
         } catch {
             alertMessage = error.localizedDescription
         }
-        
-        summarizing = false
     }
 }
 

@@ -12,8 +12,8 @@ extension Date {
         DateFormatter.appFormat.string(from: self)
     }
     
-    func apiLogFileFormat() -> String {
-        DateFormatter.apiLogFileFormat.string(from: self)
+    func logFileFormat() -> String {
+        DateFormatter.logFileFormat.string(from: self)
     }
     
     func hourToSecondFormat() -> String {
@@ -30,7 +30,7 @@ extension DateFormatter {
         return dateFormatter
     }
     
-    static var apiLogFileFormat: DateFormatter {
+    static var logFileFormat: DateFormatter {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd-HH"
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")

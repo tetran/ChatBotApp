@@ -8,5 +8,8 @@
 import Foundation
 
 class AppState: ObservableObject {
+    
     @Published var isBlocking = false
+    
+    @Published var summarizing = false
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RoomListView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject var appState: AppState
 
     @FetchRequest(
         entity: Room.entity(),
@@ -38,6 +39,7 @@ struct RoomListView: View {
                                 .padding(8)
                         }
                         .tag(room)
+                        .disabled(appState.summarizing)
                     }
                 }
                 .frame(minWidth: 300)
@@ -48,7 +50,7 @@ struct RoomListView: View {
                 } label: {
                     Label("Roomを追加する", systemImage: "plus")
                         .font(.title2)
-                        .padding()
+                        .padding(8)
                 }
                 .padding()
                 .buttonStyle(AppButtonStyle(
@@ -61,6 +63,7 @@ struct RoomListView: View {
                     NewRoomView(newRoom: $newRoom)
                         .frame(minWidth: 400, minHeight: 200)
                 }
+                .disabled(appState.summarizing)
             }
         }
         .onAppear {
@@ -80,5 +83,6 @@ struct RoomListView_Previews: PreviewProvider {
         RoomListView()
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
             .frame(width: 1000, height: 600)
+            .environmentObject(AppState())
     }
 }

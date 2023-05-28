@@ -17,6 +17,7 @@ class UserDataManager {
         case apiKey = "OpenAI.apiKey"
         case model = "OpenAI.model"
         case userName = "User.name"
+        case summarizingRoom = "Room.summrizing"
     }
 
     private let userDefaults = UserDefaults.standard

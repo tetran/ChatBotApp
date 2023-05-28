@@ -9,7 +9,9 @@ import SwiftUI
 
 struct RoomConversationView: View {
     @AppStorage(UserDataManager.Keys.model.rawValue) private var selectedModel: String = "gpt-3.5-turbo"
+    
     @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject var appState: AppState
 
     @State private var targetBot: Bot?
 
@@ -18,13 +20,12 @@ struct RoomConversationView: View {
     @Binding var messages: [Message]
     @Binding var editorHeight: CGFloat
     @Binding var alertMessage: String
-    @Binding var stopInput: Bool
 
     let room: Room
     let assignedBots: [Bot]
 
     var canSend: Bool {
-        targetBot != nil && !newText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !stopInput
+        targetBot != nil && !newText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !appState.summarizing
     }
 
     var body: some View {
@@ -142,9 +143,7 @@ struct RoomConversationView: View {
         let params = ChatRequest(messages: messages, model: selectedModel)
         do {
             let response = try await OpenAIClient.shared.chat(params)
-
-            print("================ Response:")
-            print(response)
+            print("================ Response:\n\(response)")
 
             if let message = response.choices.first?.message {
                 let botMessage = BotMessage.create(in: viewContext, text: message.content, bot: bot, room: room)
@@ -166,10 +165,10 @@ struct RoomConversationView_Previews: PreviewProvider {
             messages: .constant([]),
             editorHeight: .constant(100),
             alertMessage: .constant(""),
-            stopInput: .constant(false),
             room: Room(),
             assignedBots: []
         )
         .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        .environmentObject(AppState())
     }
 }

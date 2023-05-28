@@ -79,13 +79,16 @@ struct AppButtonStyle: ButtonStyle {
     var pressedForegroundColor: Color
     var backgroundColor: Color
     var pressedBackgroundColor: Color
+    
+    @Environment(\.isEnabled) private var isEnabled: Bool
 
     func makeBody(configuration: Self.Configuration) -> some View {
-      configuration.label
+        configuration.label
             .padding(.horizontal, 6)
             .padding(.vertical, 4)
             .foregroundColor(configuration.isPressed ? pressedForegroundColor : foregroundColor)
             .background(configuration.isPressed ? pressedBackgroundColor : backgroundColor)
+            .opacity(isEnabled ? 1.0 : 0.6)
             .cornerRadius(6)
     }
 }

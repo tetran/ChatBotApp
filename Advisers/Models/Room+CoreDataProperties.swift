@@ -82,13 +82,14 @@ extension Room : Identifiable {
         }
     }
 
-    // 関連するBotの一覧を取得するメソッド
+    /// 関連するBotの一覧を取得する.
+    /// 順序はRoomに追加された順.
     func fetchRelatedBots() -> [Bot] {
         guard let roomBots = self.roomBots as? Set<RoomBot> else {
             return []
         }
 
-        return roomBots.compactMap { $0.bot }
+        return roomBots.sorted { $0.attendedAt < $1.attendedAt }.compactMap { $0.bot }
     }
 
     func deleteRelatedBot(_ bot: Bot, context: NSManagedObjectContext) {

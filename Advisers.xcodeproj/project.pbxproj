@@ -63,6 +63,8 @@
 		5BEFA54C2A03BC53004B8537 /* AppSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFA54B2A03BC53004B8537 /* AppSettingView.swift */; };
 		5BEFA54E2A03BC79004B8537 /* AppBasicSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFA54D2A03BC79004B8537 /* AppBasicSettingView.swift */; };
 		5BEFA5502A03BC8C004B8537 /* BotSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFA54F2A03BC8C004B8537 /* BotSettingView.swift */; };
+		5BF012702A231ABB00C23580 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF0126F2A231ABB00C23580 /* Config.swift */; };
+		5BF012722A2321D700C23580 /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF012712A2321D700C23580 /* ErrorResponse.swift */; };
 		5BFB0B6E2A21C583002F3ED9 /* APILogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFB0B6D2A21C583002F3ED9 /* APILogger.swift */; };
 		5BFC40312A07DE7F002AEBEC /* RoomConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFC40302A07DE7F002AEBEC /* RoomConversationView.swift */; };
 /* End PBXBuildFile section */
@@ -125,6 +127,8 @@
 		5BEFA54B2A03BC53004B8537 /* AppSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingView.swift; sourceTree = "<group>"; };
 		5BEFA54D2A03BC79004B8537 /* AppBasicSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBasicSettingView.swift; sourceTree = "<group>"; };
 		5BEFA54F2A03BC8C004B8537 /* BotSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotSettingView.swift; sourceTree = "<group>"; };
+		5BF0126F2A231ABB00C23580 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		5BF012712A2321D700C23580 /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
 		5BFB0B6D2A21C583002F3ED9 /* APILogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APILogger.swift; sourceTree = "<group>"; };
 		5BFC40302A07DE7F002AEBEC /* RoomConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomConversationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -148,6 +152,7 @@
 				5B1DD9732A075A0C008996DA /* OpenAIClient.swift */,
 				5B1DD97E2A075F5C008996DA /* Usage.swift */,
 				5B6A6C3A2A0F875300303B4B /* OpenAIModel.swift */,
+				5BF012712A2321D700C23580 /* ErrorResponse.swift */,
 				5B6A6C3C2A0F87B800303B4B /* Models */,
 				5B1DD9752A075CC0008996DA /* Chat */,
 			);
@@ -215,6 +220,7 @@
 				5BEFA4F32A036A41004B8537 /* AdvisersApp.swift */,
 				5BEFA4F52A036A41004B8537 /* ContentView.swift */,
 				5B963B812A18CAD4005921F5 /* AppState.swift */,
+				5BF0126F2A231ABB00C23580 /* Config.swift */,
 				5BEFA4FC2A036A42004B8537 /* Persistence.swift */,
 				5BEFA5232A037196004B8537 /* Date+Extension.swift */,
 				5BD871EE2A049DAB003A169E /* UserDataManager.swift */,
@@ -423,6 +429,7 @@
 				5B6A6C3B2A0F875300303B4B /* OpenAIModel.swift in Sources */,
 				5BB0AA8B2A10D799003A8804 /* Summary+CoreDataProperties.swift in Sources */,
 				5B963B7E2A189097005921F5 /* JSONHelper.swift in Sources */,
+				5BF012702A231ABB00C23580 /* Config.swift in Sources */,
 				5B1DD97D2A075EBD008996DA /* ChatResponse.swift in Sources */,
 				5BD872082A06608A003A169E /* OpenAIConfig.swift in Sources */,
 				5BB0AA8A2A10D799003A8804 /* Summary+CoreDataClass.swift in Sources */,
@@ -431,6 +438,7 @@
 				5B6A6C3E2A0F882D00303B4B /* ModelsResponse.swift in Sources */,
 				5BEFA5372A0391CA004B8537 /* BotMessage+CoreDataClass.swift in Sources */,
 				5B1DD9842A0765A6008996DA /* APIRequest.swift in Sources */,
+				5BF012722A2321D700C23580 /* ErrorResponse.swift in Sources */,
 				5BEFA51C2A036F4A004B8537 /* Bot+CoreDataProperties.swift in Sources */,
 				5B1DD9882A0765C0008996DA /* APICommunicator.swift in Sources */,
 			);

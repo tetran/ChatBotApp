@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct EditBotView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -29,6 +30,7 @@ struct EditBotView: View {
                 TextField("名前", text: $name, onCommit: saveData)
                     .padding()
                     .textFieldStyle(.roundedBorder)
+                    .onReceive(Just(name)) { _ in limitName(30) }
                 
             ColorPicker("テーマカラー", selection: $themeColor)
                 .onChange(of: themeColor) { newValue in
@@ -61,6 +63,12 @@ struct EditBotView: View {
             name = bot.name
             preText = bot.preText ?? ""
             themeColor = Color(bot.themeColor)
+        }
+    }
+    
+    func limitName(_ upper: Int) {
+        if name.count > upper {
+            name = String(name.prefix(upper))
         }
     }
 

@@ -37,7 +37,7 @@ class APILogger {
             return nil
         }
         
-        let logFileName = "\(prefix ?? "api").\(Date().apiLogFileFormat()).log"
+        let logFileName = "\(prefix ?? "api").\(Date().logFileFormat()).log"
         let logFileURL = documentsDirectory.appendingPathComponent(logFileName)
         if !fileManager.fileExists(atPath: logFileURL.path) {
             fileManager.createFile(atPath: logFileURL.path, contents: nil, attributes: nil)

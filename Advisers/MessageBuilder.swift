@@ -32,12 +32,12 @@ struct MessageBuilder {
     static func buildSummarizeMessage(histories: [Message]) -> [ChatMessage] {
         let systemMessage = """
         The assistant an excellent secretary, and very good at summarizing conversations concisely.
-        Please follow the instruction.
         """
         
         let instruction = """
         \nInstruction: \"\"\"
-        Summarize the above conversation concisely. Response should be in markdown format and in Japanese.
+        To report to your supervisor, make a brief summary of the above conversation in three sections: "Subject", "Main Points" and "Conclusion".
+        The summary should be in markdown format and in Japanese (including section names).
         \"\"\"
         """
         
@@ -52,7 +52,7 @@ struct MessageBuilder {
         
         var newMessages: [String] = []
         if let first = historiesAfterSummary.first, first.messageType == .summary {
-            messages.append(.system(content: "Consider the summary of previous conversation below when responding.\n\(separatorOfSummary)\n\(first.text)\n\"\"\""))
+            messages.append(.system(content: "Use the summary of previous conversation below as a source of information.\n\(separatorOfSummary)\n\(first.text)\n\"\"\""))
             newMessages.append(contentsOf: historiesToJson(histories: Array(historiesAfterSummary[1...])))
         } else {
             newMessages.append(contentsOf: historiesToJson(histories: historiesAfterSummary))

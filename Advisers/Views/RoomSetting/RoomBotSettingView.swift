@@ -18,6 +18,8 @@ struct RoomBotSettingView: View {
     @State private var showDeletingAlert = false
     
     @Binding var assignedBots: [Bot]
+    
+    private let numAssignableBots = 4
 
     var body: some View {
         List {
@@ -38,6 +40,7 @@ struct RoomBotSettingView: View {
                 pressedBackgroundColor: .accentColor.opacity(0.6)
             ))
             .frame(maxWidth: .infinity)
+            .disabled(assignedBots.count >= numAssignableBots)
 
             ForEach(assignedBots) { bot in
                 HStack {
