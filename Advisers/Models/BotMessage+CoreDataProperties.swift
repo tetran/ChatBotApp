@@ -21,6 +21,7 @@ extension BotMessage {
     @NSManaged public var text: String
     @NSManaged public var room: Room
     @NSManaged public var bot: Bot
+    @NSManaged public var readAt: Date?
 
 }
 

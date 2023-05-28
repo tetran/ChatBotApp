@@ -10,6 +10,8 @@ import MarkdownUI
 
 struct MessageRowView: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
+    @Environment(\.managedObjectContext) private var viewContext
+    
     var message: Message
     
     @State private var isHovered = false
@@ -60,7 +62,8 @@ struct MessageRowView: View {
                     .textSelection(.enabled)
             }
         }
-        .padding(8)
+        .padding(.vertical, 8)
+        .padding(.horizontal, 20)
         .background(isHovered ? Color.messageHoverBG : Color.roomBG)
         .onHover { hover in
             isHovered = hover
@@ -73,5 +76,6 @@ struct BotMessageRowView_Previews: PreviewProvider {
         let context = PersistenceController.preview.container.viewContext
         let firstMessage = UserMessage.fetchFirst(in: context)
         MessageRowView(message: firstMessage!.toMessage())
+            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

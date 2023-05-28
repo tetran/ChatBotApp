@@ -14,12 +14,13 @@ struct RoomConversationView: View {
     @EnvironmentObject var appState: AppState
 
     @State private var targetBot: Bot?
-
-    @Binding var newText: String
+    @State private var newText: String = ""
+    
     @Binding var newMessageAdded: Bool
     @Binding var messages: [Message]
     @Binding var editorHeight: CGFloat
     @Binding var alertMessage: String
+    @Binding var roomsWithUnreadMessages: [Room]
 
     let room: Room
     let assignedBots: [Bot]
@@ -149,6 +150,9 @@ struct RoomConversationView: View {
                 let botMessage = BotMessage.create(in: viewContext, text: message.content, bot: bot, room: room)
                 self.messages.append(botMessage.toMessage())
                 newMessageAdded = true
+                if !roomsWithUnreadMessages.contains(room) {
+                    roomsWithUnreadMessages.append(room)
+                }
                 SoundPlayer.shared.playRingtone()
             }
         } catch {
@@ -160,11 +164,11 @@ struct RoomConversationView: View {
 struct RoomConversationView_Previews: PreviewProvider {
     static var previews: some View {
         RoomConversationView(
-            newText: .constant(""),
             newMessageAdded: .constant(false),
             messages: .constant([]),
             editorHeight: .constant(100),
             alertMessage: .constant(""),
+            roomsWithUnreadMessages: .constant([]),
             room: Room(),
             assignedBots: []
         )

@@ -81,6 +81,14 @@ extension Room : Identifiable {
             $0.postedAt.timeIntervalSince1970 < $1.postedAt.timeIntervalSince1970
         }
     }
+    
+    func unreadBotMessages() -> [BotMessage] {
+        guard let botMessages = botMessages else {
+            return []
+        }
+        
+        return botMessages.allObjects.map { ($0 as! BotMessage) }.filter { $0.readAt == nil }
+    }
 
     /// 関連するBotの一覧を取得する.
     /// 順序はRoomに追加された順.

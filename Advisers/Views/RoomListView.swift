@@ -20,6 +20,7 @@ struct RoomListView: View {
     @State private var selectedRoom: Room?
     @State private var showNewRoom = false
     @State private var newRoom: Room?
+    @State private var roomsWithUnreadMessages: [Room] = []
     
     var body: some View {
         NavigationView {
@@ -32,8 +33,11 @@ struct RoomListView: View {
                 List(selection: $selectedRoom) {
                     ForEach(rooms) { room in
                         NavigationLink {
-                            RoomView(room: room)
+                            RoomView(room: room, roomsWithUnreadMessages: $roomsWithUnreadMessages)
                         } label: {
+                            Circle()
+                                .foregroundColor(roomsWithUnreadMessages.contains(room) ? .accentColor : .clear)
+                                .frame(width: 10, height: 10)
                             Text(room.name)
                                 .font(.title2)
                                 .padding(8)
@@ -42,7 +46,7 @@ struct RoomListView: View {
                         .disabled(appState.summarizing)
                     }
                 }
-                .frame(minWidth: 300)
+                .frame(minWidth: 240)
                 .navigationTitle("Rooms")
                 
                 Button {
@@ -68,6 +72,7 @@ struct RoomListView: View {
         }
         .onAppear {
             selectedRoom = rooms.first
+            roomsWithUnreadMessages = rooms.filter { !$0.unreadBotMessages().isEmpty }
         }
         .onChange(of: newRoom) { newRoom in
             if let newRoom = newRoom {

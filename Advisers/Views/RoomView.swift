@@ -16,9 +16,6 @@ struct RoomView: View {
     @State private var messages: [Message] = []
     @State private var assignedBots: [Bot] = []
 
-    @State private var targetBot: Bot?
-    @State private var newText: String = ""
-
     @State private var showRoomSetting = false
     @State private var newMessageAdded = false
     @State private var editorHeight: CGFloat = 120
@@ -29,6 +26,8 @@ struct RoomView: View {
     
     let room: Room
     
+    @Binding var roomsWithUnreadMessages: [Room]
+
     private var messagesAfterLastSummary: [Message] {
        guard let summaryIndex = messages.lastIndex(where: { $0.messageType == .summary }) else {
            return messages
@@ -113,7 +112,8 @@ struct RoomView: View {
                     } label: {
                         if appState.summarizing {
                             Text("まとめ作成中...")
-                                .padding(4)
+                                .padding(.vertical, 4)
+                                .padding(.horizontal, 12)
                                 .foregroundColor(.accentColor)
                                 .opacity(noticeShowing ? 1.0 : 0.0)
                                 .onAppear {
@@ -142,19 +142,24 @@ struct RoomView: View {
             }
 
             RoomConversationView(
-                newText: $newText,
                 newMessageAdded: $newMessageAdded,
                 messages: $messages,
                 editorHeight: $editorHeight,
                 alertMessage: $alertMessage,
+                roomsWithUnreadMessages: $roomsWithUnreadMessages,
                 room: room,
                 assignedBots: assignedBots
             )
             .frame(height: editorHeight)
         }
         .onAppear {
+            markMessagesAsRead()
+            
             self.messages = room.allMessages()
             self.assignedBots = room.fetchRelatedBots()
+        }
+        .onChange(of: messages) { messages in
+            markMessagesAsRead()
         }
         .onChange(of: alertMessage) { message in
             showAlert = !message.isEmpty
@@ -167,6 +172,15 @@ struct RoomView: View {
             Text(alertMessage)
         })
         .background(Color.roomBG)
+    }
+    
+    private func markMessagesAsRead() {
+        room.unreadBotMessages().forEach { $0.readAt = Date() }
+        try! viewContext.save()
+        
+        if let index = roomsWithUnreadMessages.firstIndex(of: room) {
+            roomsWithUnreadMessages.remove(at: index)
+        }
     }
     
     private func makeSummary() async {
@@ -203,7 +217,7 @@ struct RoomView_Previews: PreviewProvider {
         let context = PersistenceController.preview.container.viewContext
         let firstRoom = Room.fetchFirst(in: context)
 
-        RoomView(room: firstRoom!)
+        RoomView(room: firstRoom!, roomsWithUnreadMessages: .constant([]))
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
             .environmentObject(AppState())
     }
