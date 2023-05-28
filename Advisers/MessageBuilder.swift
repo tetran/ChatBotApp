@@ -14,7 +14,7 @@ struct MessageBuilder {
     static func buildUserMessages(newMessage: Message, to bot: Bot, histories: [Message]) -> [ChatMessage] {
         let systemMessage = """
         The following is a conversation between a user named`\(UserDataManager.shared.userName)` and AI assistant(s). `\(bot.name)` is a helpful, creative, clever, and very friendly assistant.
-        Continue the conversation below as `\(bot.name)`, as if talking to `\(UserDataManager.shared.userName)`. Response should be in markdown format.
+        Continue the conversation below as `\(bot.name)`, as if talking to `\(UserDataManager.shared.userName)`. Responses should be in markdown format.
         """
 
         var preTexts: [String] = [systemMessage]
@@ -37,11 +37,28 @@ struct MessageBuilder {
         let instruction = """
         \nInstruction: \"\"\"
         To report to your supervisor, make a brief summary of the above conversation in three sections: "Subject", "Main Points" and "Conclusion".
-        The summary should be in markdown format and in Japanese (including section names).
         \"\"\"
         """
         
         return buildMessages(preTexts: [systemMessage], histories: histories, instruction: instruction)
+    }
+    
+    static func buildTranslationMessage(source: String) -> [ChatMessage] {
+        let systemMessage = """
+        The assistant is a professional translator.
+        """
+        
+        let instruction = """
+        \nInstruction: \"\"\"
+        Translate the folloing text into Japanese excluding character names, while preserving the format.
+        \"\"\"
+        
+        Text: \"\"\"
+        \(source)
+        \"\"\"
+        """
+        
+        return [.system(content: systemMessage), .user(content: instruction)]
     }
 
     private static func buildMessages(preTexts: [String], histories: [Message], instruction: String) -> [ChatMessage] {

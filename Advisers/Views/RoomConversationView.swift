@@ -41,7 +41,7 @@ struct RoomConversationView: View {
             }
             .lineSpacing(6)
             .padding(.top, 40)
-            .padding(.leading, 12)
+            .padding(.leading, 4)
             .padding(.trailing, 40)
             .onChange(of: newText) { _ in
                 withAnimation(.easeInOut(duration: 0.1)) {
@@ -71,7 +71,7 @@ struct RoomConversationView: View {
                     }
                     Spacer()
                 }
-                .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 8))
+                .padding(8)
                 
                 Spacer()
             }

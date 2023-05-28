@@ -134,7 +134,7 @@ struct RoomView: View {
                     ))
                     .overlay(
                         RoundedRectangle(cornerRadius: 4)
-                            .stroke(Color.gray, lineWidth: 1)
+                            .stroke(appState.summarizing ? Color.accentColor : Color.gray, lineWidth: 1)
                     )
                     .disabled(!canSummarize)
                 }
@@ -189,23 +189,42 @@ struct RoomView: View {
             appState.summarizing = false
         }
         
-        let messages = MessageBuilder.buildSummarizeMessage(histories: self.messages)
-        print("================ Messages:")
-        messages.forEach { msg in
-            print("\(msg)")
-        }
-
-        let params = ChatRequest(messages: messages, model: selectedModel)
         do {
+            // Run summarization
+            let messages = MessageBuilder.buildSummarizeMessage(histories: self.messages)
+            print("================ Messages:")
+            messages.forEach { msg in
+                print("\(msg)")
+            }
+
+            let params = ChatRequest(messages: messages, model: selectedModel)
+            
             let response = try await OpenAIClient.shared.chat(params)
             print("================ Response:\n\(response)")
 
-            if let message = response.choices.first?.message {
-                let summury = Summary.create(in: viewContext, text: message.content, room: room)
-                self.messages.append(summury.toMessage())
-                newMessageAdded = true
-                SoundPlayer.shared.playRingtone()
+            guard let summaryResponseMessage = response.choices.first?.message else {
+                return
             }
+            
+            // Run translation
+            let translateMessage = MessageBuilder.buildTranslationMessage(source: summaryResponseMessage.content)
+            print("================ Messages:")
+            translateMessage.forEach { msg in
+                print("\(msg)")
+            }
+            
+            let translateParams = ChatRequest(messages: translateMessage, model: selectedModel)
+            let translateResponse = try await OpenAIClient.shared.chat(translateParams)
+            print("================ Response:\n\(translateResponse)")
+            
+            guard let translateResponseMessage = translateResponse.choices.first?.message else {
+                return
+            }
+            
+            let summury = Summary.create(in: viewContext, text: translateResponseMessage.content, room: room)
+            self.messages.append(summury.toMessage())
+            newMessageAdded = true
+            SoundPlayer.shared.playRingtone()
         } catch {
             alertMessage = error.localizedDescription
         }
