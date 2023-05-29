@@ -207,21 +207,21 @@ struct RoomView: View {
             }
             
             // Run translation
-            let translateMessage = MessageBuilder.buildTranslationMessage(source: summaryResponseMessage.content)
-            print("================ Messages:")
-            translateMessage.forEach { msg in
-                print("\(msg)")
-            }
+//            let translateMessage = MessageBuilder.buildTranslationMessage(source: summaryResponseMessage.content)
+//            print("================ Messages:")
+//            translateMessage.forEach { msg in
+//                print("\(msg)")
+//            }
+//
+//            let translateParams = ChatRequest(messages: translateMessage, model: selectedModel)
+//            let translateResponse = try await OpenAIClient.shared.chat(translateParams)
+//            print("================ Response:\n\(translateResponse)")
+//
+//            guard let translateResponseMessage = translateResponse.choices.first?.message else {
+//                return
+//            }
             
-            let translateParams = ChatRequest(messages: translateMessage, model: selectedModel)
-            let translateResponse = try await OpenAIClient.shared.chat(translateParams)
-            print("================ Response:\n\(translateResponse)")
-            
-            guard let translateResponseMessage = translateResponse.choices.first?.message else {
-                return
-            }
-            
-            let summury = Summary.create(in: viewContext, text: translateResponseMessage.content, room: room)
+            let summury = Summary.create(in: viewContext, text: summaryResponseMessage.content, room: room)
             self.messages.append(summury.toMessage())
             newMessageAdded = true
             SoundPlayer.shared.playRingtone()

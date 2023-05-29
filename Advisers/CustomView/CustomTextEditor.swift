@@ -36,6 +36,7 @@ struct CustomTextEditor: NSViewRepresentable {
 //            nsView.font = NSFont.preferredFont(from: font)
 //        }
         nsView.font = .systemFont(ofSize: fontSize)
+        nsView.allowsUndo = true
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = context.environment.lineSpacing

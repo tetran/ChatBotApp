@@ -13,8 +13,8 @@ class APILogger {
     
     private init() {}
     
-    func putLog(_ text: String, prefix: String? = nil) {
-        guard let logFilUrl = getOrCreateLogFile(prefix: prefix), let data = createLogMessage(text) else {
+    func putLog(_ text: String, apiName: String) {
+        guard let logFilUrl = getOrCreateLogFile(), let data = createLogMessage(text, apiName: apiName) else {
             return
         }
         
@@ -27,17 +27,17 @@ class APILogger {
         }
     }
     
-    private func createLogMessage(_ text: String) -> Data? {
-        "[\(Date().hourToSecondFormat())] \(text)\n".data(using: .utf8)
+    private func createLogMessage(_ text: String, apiName: String) -> Data? {
+        "[\(Date().logTextFormat())] [\(apiName)] \(text)\n".data(using: .utf8)
     }
     
-    private func getOrCreateLogFile(prefix: String? = nil) -> URL? {
+    private func getOrCreateLogFile() -> URL? {
         let fileManager = FileManager.default
         guard let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
             return nil
         }
         
-        let logFileName = "\(prefix ?? "api").\(Date().logFileFormat()).log"
+        let logFileName = "api.\(Date().logFileFormat()).log"
         let logFileURL = documentsDirectory.appendingPathComponent(logFileName)
         if !fileManager.fileExists(atPath: logFileURL.path) {
             fileManager.createFile(atPath: logFileURL.path, contents: nil, attributes: nil)

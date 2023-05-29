@@ -31,12 +31,14 @@ struct MessageBuilder {
 
     static func buildSummarizeMessage(histories: [Message]) -> [ChatMessage] {
         let systemMessage = """
-        The assistant an excellent secretary, and very good at summarizing conversations concisely.
+        The assistant an excellent secretary, and very good at summarizing conversations concisely. Follow the instruction.
         """
         
         let instruction = """
-        \nInstruction: \"\"\"
-        To report to your supervisor, make a brief summary of the above conversation in three sections: "Subject", "Main Points" and "Conclusion".
+        
+        Instruction: \"\"\"
+        To report to your supervisor, make a brief summary of the above conversation in two sections: "Subject" and "Main Points".
+        The summary should be in Japanese and in shorthand.
         \"\"\"
         """
         
@@ -45,12 +47,13 @@ struct MessageBuilder {
     
     static func buildTranslationMessage(source: String) -> [ChatMessage] {
         let systemMessage = """
-        The assistant is a professional translator.
+        The assistant is a professional translator. Follow the instruction.
         """
         
         let instruction = """
-        \nInstruction: \"\"\"
-        Translate the folloing text into Japanese excluding character names, while preserving the format.
+        
+        Instruction: \"\"\"
+        Translate the folloing text into Japanese while preserving the format.
         \"\"\"
         
         Text: \"\"\"

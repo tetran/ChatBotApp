@@ -16,6 +16,10 @@ extension Date {
         DateFormatter.logFileFormat.string(from: self)
     }
     
+    func logTextFormat() -> String {
+        DateFormatter.logTextFormat.string(from: self)
+    }
+    
     func hourToSecondFormat() -> String {
         DateFormatter.hourToSecondFormat.string(from: self)
     }
@@ -32,11 +36,20 @@ extension DateFormatter {
     
     static var logFileFormat: DateFormatter {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd-HH"
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
         return dateFormatter
     }
+    
+    static var logTextFormat: DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
+        return dateFormatter
+    }
+    
     
     static var hourToSecondFormat: DateFormatter {
         let dateFormatter = DateFormatter()

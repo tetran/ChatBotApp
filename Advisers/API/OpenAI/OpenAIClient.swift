@@ -49,15 +49,14 @@ class OpenAIClient {
     
     private func postJson<T: Encodable, U: Decodable>(_ path: String, parameters: T) async throws -> U {
         let requestBody = try requestEncoder.encode(parameters)
-        let logPrefix = path.replacingOccurrences(of: "/", with: ".")
         
-        APILogger.shared.putLog("Request: \(String(data: requestBody, encoding: .utf8) ?? "No Body")", prefix: logPrefix)
+        APILogger.shared.putLog("Request: \(String(data: requestBody, encoding: .utf8) ?? "No Body")", apiName: path)
         
         let url = makeUrl(path)
         let request = APIRequest(url: url, method: "POST", headers: makeHeader(), body: requestBody)
         
         let response = try await communicator.performRequest(request)
-        APILogger.shared.putLog("Response Status: \(response.statusCode)\nHeaders: \(response.headers)\nBody: \(String(data: response.body, encoding: .utf8) ?? "No Body")", prefix: logPrefix)
+        APILogger.shared.putLog("Response Status: \(response.statusCode)\nHeaders: \(response.headers)\nBody: \(String(data: response.body, encoding: .utf8) ?? "No Body")", apiName: path)
         
         if response.statusCode != 200 {
             let errorResponse = try responseDecoder.decode(ErrorResponse.self, from: response.body)
