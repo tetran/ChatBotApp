@@ -28,7 +28,7 @@ class APILogger {
     }
     
     private func createLogMessage(_ text: String, apiName: String) -> Data? {
-        "[\(Date().logTextFormat())] [\(apiName)] \(text)\n".data(using: .utf8)
+        "[\(Date().logTextFormat())] [API: \(apiName)] \(text)\n".data(using: .utf8)
     }
     
     private func getOrCreateLogFile() -> URL? {

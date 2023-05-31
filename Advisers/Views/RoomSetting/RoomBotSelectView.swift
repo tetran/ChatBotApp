@@ -35,7 +35,7 @@ struct RoomBotSelectView: View {
                     Image(systemName: "xmark")
                         .bold()
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(AppButtonStyle.closeButton)
             }
             
             List {

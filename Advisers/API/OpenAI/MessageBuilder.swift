@@ -37,8 +37,9 @@ struct MessageBuilder {
         let instruction = """
         
         Instruction: \"\"\"
-        To report to your supervisor, make a brief summary of the above conversation in two sections: "Subject" and "Main Points".
-        The summary should be in Japanese and in shorthand.
+        To report to your supervisor, briefly summarize the main points about the above conversation.
+        The summary should be in Japanese, in shorthand, markdown format.
+        Persons' names should be enclosed in backquotes, and honorifics should be omitted.
         \"\"\"
         """
         

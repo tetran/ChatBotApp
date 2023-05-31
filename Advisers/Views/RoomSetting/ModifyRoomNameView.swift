@@ -16,11 +16,23 @@ struct ModifyRoomNameView: View {
     
     var body: some View {
         VStack {
-            Form {
-                Section(header: Text("Room名を変更する")) {
-                    TextField("名前", text: $roomName)
-                        .padding()
+            HStack {
+                Text("Room名を変更する")
+                    .font(.title)
+                Spacer()
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "xmark")
+                        .bold()
                 }
+                .buttonStyle(AppButtonStyle.closeButton)
+            }
+            .padding()
+            
+            Form {
+                TextField("名前", text: $roomName)
+                    .padding()
             }
             .padding(20)
             
@@ -28,19 +40,21 @@ struct ModifyRoomNameView: View {
                 Spacer()
                 
                 Button {
-                    dismiss()
-                } label: {
-                    Text("キャンセル")
-                }
-                
-                Button {
                     room.name = roomName
                     try! viewContext.save()
                     dismiss()
                 } label: {
                     Text("変更を保存する")
+                        .padding(.vertical, 4)
+                        .padding(.horizontal, 8)
                 }
-                .padding(.leading)
+                
+                .buttonStyle(AppButtonStyle(
+                    foregroundColor: .primary,
+                    pressedForegroundColor: .primary.opacity(0.6),
+                    backgroundColor: .gray.opacity(0.2),
+                    pressedBackgroundColor: .gray.opacity(0.1)
+                ))
                 .disabled(roomName.isEmpty)
             }
             .padding()

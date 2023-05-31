@@ -32,7 +32,7 @@ struct RoomSettingView: View {
                     Image(systemName: "xmark")
                         .bold()
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(AppButtonStyle.closeButton)
             }
             .padding()
             

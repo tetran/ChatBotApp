@@ -28,7 +28,7 @@ struct NewRoomView: View {
                     Image(systemName: "xmark")
                         .bold()
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(AppButtonStyle.closeButton)
             }
             .padding()
             
@@ -53,9 +53,15 @@ struct NewRoomView: View {
                     dismiss()
                 } label: {
                     Text("作成")
+                        .padding(.vertical, 4)
+                        .padding(.horizontal, 8)
                 }
-                .padding(.leading)
-                .buttonStyle(.plain)
+                .buttonStyle(AppButtonStyle(
+                    foregroundColor: .primary,
+                    pressedForegroundColor: .primary.opacity(0.6),
+                    backgroundColor: .gray.opacity(0.2),
+                    pressedBackgroundColor: .gray.opacity(0.1)
+                ))
                 .disabled(roomName.isEmpty)
             }
             .padding()

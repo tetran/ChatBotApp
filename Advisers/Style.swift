@@ -17,11 +17,17 @@ public typealias NativeColor = NSColor
 public typealias NativeFont = NSFont
 #endif
 
+import MarkdownUI
+
 extension Color {
     
     static let roomBG = Color("RoomBgColor")
     
     static let messageHoverBG = Color("MessageHoverBgColor")
+    
+    init(nativeColor: NativeColor) {
+        self.init(cgColor: nativeColor.cgColor)
+    }
 }
 
 extension NativeColor {
@@ -91,4 +97,52 @@ struct AppButtonStyle: ButtonStyle {
             .opacity(isEnabled ? 1.0 : 0.6)
             .cornerRadius(6)
     }
+}
+
+extension AppButtonStyle {
+    static let closeButton = AppButtonStyle(
+        foregroundColor: .primary,
+        pressedForegroundColor: .primary.opacity(0.6),
+        backgroundColor: .gray.opacity(0.2),
+        pressedBackgroundColor: .gray.opacity(0.1)
+    )
+}
+
+extension Theme {
+  private static let messageRowBase = Theme()
+    .code {
+        FontFamilyVariant(.monospaced)
+        FontSize(.em(0.85))
+    }
+    .paragraph { configuration in
+        configuration.label
+            .relativeLineSpacing(.em(0.25))
+            .markdownMargin(top: 0, bottom: 16)
+    }
+    .listItem { configuration in
+        configuration.label
+            .markdownMargin(top: .em(0.25))
+    }
+    
+    static let messageRowDark = messageRowBase
+        .codeBlock { configuration in
+            configuration.label
+                .markdownMargin(top: .em(0), bottom: .em(1))
+                .monospaced()
+                .padding(.vertical, 8)
+                .padding(.horizontal, 16)
+                .background(.white.opacity(0.05))
+                .cornerRadius(2)
+        }
+    
+    static let messageRowLight = messageRowBase
+        .codeBlock { configuration in
+            configuration.label
+                .markdownMargin(top: .em(0), bottom: .em(1))
+                .monospaced()
+                .padding(.vertical, 8)
+                .padding(.horizontal, 16)
+                .background(.black.opacity(0.05))
+                .cornerRadius(2)
+        }
 }

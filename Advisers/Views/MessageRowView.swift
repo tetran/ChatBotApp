@@ -5,8 +5,9 @@
 //  Created by kkoichi on 2023/05/04.
 //
 
-import SwiftUI
 import MarkdownUI
+import Splash
+import SwiftUI
 
 struct MessageRowView: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
@@ -16,16 +17,25 @@ struct MessageRowView: View {
     
     @State private var isHovered = false
     
-    var senderColor: Color {
+    var senderColor: SwiftUI.Color {
         message.senderColor ?? defualtColor
     }
     
-    var receiverBgColor: Color {
-        (message.receiverColor ?? defualtColor).opacity(0.7)
+    var receiverBgColor: SwiftUI.Color {
+        (message.receiverColor ?? defualtColor).opacity(0.8)
     }
     
-    var defualtColor: Color {
+    var defualtColor: SwiftUI.Color {
         colorScheme == .light ? .black : .white
+    }
+    
+    private var theme: Splash.Theme {
+      switch self.colorScheme {
+      case .dark:
+        return .wwdc17(withFont: .init(size: 16))
+      default:
+        return .sunset(withFont: .init(size: 16))
+      }
     }
     
     var body: some View {
@@ -60,6 +70,8 @@ struct MessageRowView: View {
                 Markdown(message.text)
                     .lineSpacing(4)
                     .textSelection(.enabled)
+                    .markdownTheme(colorScheme == .dark ? .messageRowDark : .messageRowLight)
+                    .markdownCodeSyntaxHighlighter(.splash(theme: theme))
             }
         }
         .padding(.vertical, 8)

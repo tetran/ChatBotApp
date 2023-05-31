@@ -106,6 +106,9 @@ struct RoomView: View {
                 VStack {
                     Spacer()
                     Button {
+                        withAnimation {
+                            appState.summarizing = true
+                        }
                         Task {
                             await makeSummary()
                         }
@@ -184,9 +187,10 @@ struct RoomView: View {
     }
     
     private func makeSummary() async {
-        appState.summarizing = true
         defer {
-            appState.summarizing = false
+            withAnimation {
+                appState.summarizing = false
+            }
         }
         
         do {
