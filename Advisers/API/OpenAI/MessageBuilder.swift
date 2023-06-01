@@ -38,8 +38,9 @@ struct MessageBuilder {
         
         Instruction: \"\"\"
         To report to your supervisor, briefly summarize the main points about the above conversation.
-        The summary should be in Japanese, in shorthand, markdown format.
-        Persons' names should be enclosed in backquotes, and honorifics should be omitted.
+        * The summary should be in Japanese, in shorthand, markdown format.
+        * Persons' names should be enclosed in two asterisks (e.g., **User1**), and honorifics should be omitted.
+        * Return only the contents of main points.
         \"\"\"
         """
         

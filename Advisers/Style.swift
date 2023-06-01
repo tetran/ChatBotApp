@@ -113,6 +113,9 @@ extension Theme {
     .code {
         FontFamilyVariant(.monospaced)
         FontSize(.em(0.85))
+
+        ForegroundColor(.orange)
+        BackgroundColor(.gray.opacity(0.1))
     }
     .paragraph { configuration in
         configuration.label
@@ -122,6 +125,9 @@ extension Theme {
     .listItem { configuration in
         configuration.label
             .markdownMargin(top: .em(0.25))
+    }
+    .strong {
+        FontWeight(.semibold)
     }
     
     static let messageRowDark = messageRowBase
